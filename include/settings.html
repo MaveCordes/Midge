@@ -1,0 +1,768 @@
+const char settings_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/simplex/bootstrap.min.css'>
+
+  <style>
+    html {
+      font-size: 0.8rem;
+    }
+
+    h1 {
+      font-size: 1rem;
+
+    }
+
+    h2 {
+      font-size: 1.5rem;
+
+    }
+
+    p {
+      font-size: 0.8rem;
+
+    }
+
+    footer {
+      text-align: center;
+    }
+
+    .table,
+    th,
+    td {
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgb(52, 52, 52);
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-light,
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-check {
+      margin-bottom: 5px;
+    }
+
+    .btn-primary:focus,
+    .btn-primary:active,
+    .btn-secondary:focus,
+    .btn-secondary:active,
+    .btn-light:focus,
+    .btn-light:active,
+    .btn-outline-primary:focus,
+    .btn-outline-primary:active,
+    .btn-outline-secondary:focus,
+    .btn-outline-secondary:active,
+    .btn-check:focus,
+    .btn-check:active {
+      box-shadow: none;
+      outline: 0px;
+    }
+
+    .modal-content {
+      margin: 50 px auto;
+      /* 15% from the top and centered */
+      width: 60%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    .modal-body {
+      margin: auto;
+      /* 5% from the top, 15% from the bottom and centered */
+    }
+
+    .modal-footer {
+      margin: auto;
+      /* 5% from the top, 15% from the bottom and centered */
+    }
+
+    .inner {
+      margin-left: 10px;
+      /* 5% from the top, 15% from the bottom and centered */
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <svg viewBox='0 0 490.469 490.469' width='35'>
+        <g>
+          <path style='fill:#E6E6E6;'
+            d='M371.61,425.085c-19.54,65.38-126.38,65.38-126.38,65.38s-106.83,0-126.37-65.38   c-15.81-52.85,19.37-117.34,33.42-170.54c3.34-12.61,5.48-24.58,5.48-35.61l87.47-141.79l87.48,141.79c0,11.03,2.14,23,5.48,35.61   C352.24,307.745,387.42,372.235,371.61,425.085z' />
+          <path style='fill:#CCCCCC;'
+            d='M245.23,249.875c33,0,64.42,2.45,92.96,4.67c-3.34-12.61-5.48-24.58-5.48-35.61l-87.48-141.79   l-0.009,0.019l0.006-0.02l-87.47,141.795c0,57.59-58.45,140.78-38.9,206.15c19.54,65.38,126.37,65.38,126.37,65.38   s-47.75,0-56.49-65.38c-5.575-41.699,3.032-90.641,9.998-135.568c3.526-22.741,23.062-39.631,46.075-39.645   C244.949,249.875,245.09,249.875,245.23,249.875z' />
+          <path style='fill:#AD7136;'
+            d='M481.775,163.069C481.775,73.008,375.872,0,245.234,0C114.597,0,8.694,73.008,8.694,163.069   s105.903,51.619,236.54,51.619S481.775,253.129,481.775,163.069z' />
+          <path style='fill:#8C531F;'
+            d='M139.836,163.07c0,33.696,6.603,49.409,17.926,55.865C70.425,225.685,8.694,231.823,8.694,163.07   c0-90.06,105.898-163.068,236.541-163.068C187.022,0.002,139.836,73.01,139.836,163.07z' />
+          <g>
+            <path style='fill:#CCCCCC;'
+              d='M322.147,434.543c-6.676,0-10-8.468-5.09-13.006c4.965-4.589,13.194-0.482,12.554,6.24    C329.25,431.57,325.949,434.543,322.147,434.543z' />
+            <path style='fill:#CCCCCC;'
+              d='M318.717,407.723c-6.662,0-10.002-8.48-5.087-13.005c2.326-2.141,5.827-2.591,8.621-1.11    c2.827,1.499,4.396,4.754,3.855,7.901C325.498,405.057,322.314,407.723,318.717,407.723z' />
+            <path style='fill:#CCCCCC;'
+              d='M341.607,416.443c-6.712,0-9.998-8.578-5.032-13.061c2.448-2.21,6.138-2.549,8.953-0.837    c2.541,1.546,3.925,4.56,3.498,7.496C348.499,413.671,345.269,416.443,341.607,416.443z' />
+          </g>
+        </g>
+      </svg>
+
+      <a class="navbar-brand" style="margin-left: 5px">Mushroom Fridge</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+        aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/settings">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/sdcard">SD Card</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/webserial">WebSerial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cam">ESP32CAM</a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  </p>
+
+  <div class=inner>
+
+    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#resetModal">Reset</button>
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to reset the esp32?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="reset_function">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_OTA% type="button" data-bs-toggle="modal" data-bs-target="#otaModal">OTA</button>
+    <div class="modal fade" id="otaModal" tabindex="-1" aria-labelledby="otaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle OTA?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" id="OTA_toggle"
+              data-bs-dismiss="modal">%TOGGLE_OTA%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_CAL% type="button" data-bs-toggle="modal" data-bs-target="#calibrateModal">Calibrate</button>
+    <div class="modal fade" id="calibrateModal" tabindex="-1" aria-labelledby="calibrateModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle calibration for MHZ-19B?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="calibration">%TOGGLE_CAL%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_TEMP% type="button" data-bs-toggle="modal" data-bs-target="#disable_temp_Modal">Heater</button>
+    <div class="modal fade" id="disable_temp_Modal" tabindex="-1" aria-labelledby="disableModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the heater?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_heat">%TOGGLE_TEMP%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_HUM% type="button" data-bs-toggle="modal" data-bs-target="#disable_hum_Modal">Humidifier</button>
+    <div class="modal fade" id="disable_hum_Modal" tabindex="-1" aria-labelledby="disableModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the humidifier?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_humidifyer">%TOGGLE_HUM%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_LIGHT% type="button" data-bs-toggle="modal" data-bs-target="#disable_light_Modal">Light</button>
+    <div class="modal fade" id="disable_light_Modal" tabindex="-1" aria-labelledby="disableModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the light?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_lamp">%TOGGLE_LIGHT%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_FAN% type="button" data-bs-toggle="modal" data-bs-target="#disable_fan_Modal">Ventilator</button>
+    <div class="modal fade" id="disable_fan_Modal" tabindex="-1" aria-labelledby="disableModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the ventilator?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_ventilator">%TOGGLE_FAN%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_BME% type="button" data-bs-toggle="modal" data-bs-target="#disable_bme_Modal">BME680</button>
+    <div class="modal fade" id="disable_bme_Modal" tabindex="-1" aria-labelledby="disableModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the BME680?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_bme">%TOGGLE_BME%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_MHZ% type="button" data-bs-toggle="modal" data-bs-target="#disable_co2_Modal">MHZ-19b</button>
+    <div class="modal fade" id="disable_co2_Modal" tabindex="-1" aria-labelledby="disableModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the MHZ-19b?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_co2">%TOGGLE_MHZ%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button %CLASS_SD% type="button" data-bs-toggle="modal" data-bs-target="#disable_sd_Modal">SD</button>
+    <div class="modal fade" id="disable_sd_Modal" tabindex="-1" aria-labelledby="disableModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Do you really want to toggle the SD Card?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onClick="window.location.reload();" class="btn btn-secondary" data-bs-dismiss="modal"
+              id="toggle_sd">%TOGGLE_SD%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <legend class="mt-4">System Variables</legend>
+    <table style="width:330px; table-layout: fixed;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Hum</th>
+          <th>Temp</th>
+          <th>Fan</th>
+          <th>Light</th>
+          <th>SD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Status</td>
+          <td><span id="hum_button_data_on" %HUMIDITY_BUTTON_ON%><span class='badge bg-primary'>ON</span></span>
+            <span id="hum_button_data_off" %HUMIDITY_BUTTON_OFF%><span class='badge'
+                style="background-color: rgb(201, 204, 195); ">OFF</span></span>
+          </td>
+          <td><span id="temp_button_data_on" %TEMPERATURE_BUTTON_ON%><span class='badge bg-primary'>ON</span></span>
+            <span id="temp_button_data_off" %TEMPERATURE_BUTTON_OFF%><span class='badge'
+                style="background-color: rgb(201, 204, 195); ">OFF</span></span>
+          </td>
+          <td><span id="fan_button_data_on" %FAN_BUTTON_ON%><span class='badge bg-primary'>ON</span></span>
+            <span id="fan_button_data_off" %FAN_BUTTON_OFF%><span class='badge'
+                style="background-color: rgb(201, 204, 195); ">OFF</span></span>
+          </td>
+          <td><span id="light_button_data_on" %LIGHT_BUTTON_ON%><span class='badge bg-primary'>ON</span></span>
+            <span id="light_button_data_off" %LIGHT_BUTTON_OFF%><span class='badge'
+                style="background-color: rgb(201, 204, 195); ">OFF</span></span>
+          </td>
+          <!-- <td><span id="light_button_data_on" %LIGHT_BUTTON_ON%><span class='badge bg-primary'>ON</span></span>
+            <span id="light_button_data_off" %LIGHT_BUTTON_OFF%><span class='badge'
+                style="background-color: rgb(201, 204, 195); ">OFF</span></span></td> -->
+        </tr>
+        <tr>
+          <th>Value</th>
+          <td><span id="h">%HUMIDITY%</span>&#37</td>
+          <td><span id="t">%TEMPERATURE%</span>&#176C</td>
+          <td><span id="c">%CO2%</span>ppm</td>
+          <td><span id="time"></span></td>
+          <td><span id="sd">%SD_CARD_NAME%</span></td>
+        </tr>
+        <tr>
+          <th>Time</th>
+          <td><span id="h_r">%HUM_RUNNING_TIME%</span></td>
+          <td><span id="t_r">%TEMPERATURE_RUNNING_TIME%</span></td>
+          <td><span id="f_r">%FAN_RUNNING_TIME%</span></td>
+          <td><span id="l_r">%LIGHT_RUNNING_TIME%</span></td>
+          <td><span id="sd_r">%SD_CARD_TIMER%</span></td>
+        </tr>
+        <tr>
+          <th>ON</th>
+          <td><span id="on_h">%ON_TIME_HUMIDITY%</span>min</td>
+          <td><span id="on_t">%ON_TIME_TEMPERATURE%</span>min</td>
+          <td><span id="on_f">%ON_TIME_FAN%</span>min</td>
+          <td><span id="on_l">%ON_TIME_LIGHT%</span>h</td>
+          <td><span id="sd_t">%TARGET_VALUE_SD_TIME%</span>min</td>
+        </tr>
+        <tr>
+          <th>OFF</th>
+          <td><span id="off_h">%OFF_TIME_HUMIDITY%</span>min</td>
+          <td><span id="off_t">%OFF_TIME_TEMPERATURE%</span>min</td>
+          <td><span id="off_f">%OFF_TIME_FAN%</span>min</td>
+          <td><span id="off_l">%OFF_TIME_LIGHT%</span>h</td>
+        </tr>
+        <tr>
+          <th>Target</th>
+          <td><span id="h_t">%TARGET_VALUE_HUMIDITY%</span>&#37</td>
+          <td><span id="t_t">%TARGET_VALUE_TEMPERATURE%</span>&#176C</td>
+          <td><span id="c_t">%TARGET_VALUE_CO2%</span>ppm</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    </p>
+
+    <legend class="mt-4">Set Target Values</legend>
+
+    <form onsubmit="send_value('hum_target');window.location.reload();return false">
+      <input type="number" id="hum_target" min="1" max="100" placeholder="set target Humidity in %"
+        style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <form onsubmit="send_value('temp_target');window.location.reload();return false">
+      <input type="number" id="temp_target" min="1" max="35" placeholder="set target Temperature in °C"
+        style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <form onsubmit="send_value('co2_target');window.location.reload();return false">
+      <input type="number" id="co2_target" min="1" max="4000" placeholder="set target CO2 in ppm" style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <form onsubmit="send_value('sd_time_target');window.location.reload();return false">
+      <input type="number" id="sd_time_target" min="1" max="60" placeholder="set SD writetime in min"
+        style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <form onsubmit="send_multiple_value('hum_on_input','hum_off_input');window.location.reload();return false">
+      <input type="number" id="hum_on_input" min="0" max="60" placeholder="set hum on time" style="width: 200px;">
+      <input type="number" id="hum_off_input" min="0" max="60" placeholder="set hum off time" style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+
+    <form onsubmit="send_multiple_value('temp_on_input','temp_off_input');window.location.reload();return false">
+      <input type="number" id="temp_on_input" min="0" max="60" placeholder="set heat on time" style="width: 200px;">
+      <input type="number" id="temp_off_input" min="0" max="60" placeholder="set heat off time" style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <form onsubmit="send_multiple_value('fan_on_input','fan_off_input');window.location.reload();return false">
+      <input type="number" id="fan_on_input" name="FAN_ON_INPUT" min="0" max="60" placeholder="set FAN ON time"
+        style="width: 200px;">
+      <input type="number" id="fan_off_input" min="0" max="60" placeholder="set fan off time" style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <form onsubmit="send_multiple_value('light_on_input','light_off_input');window.location.reload();return false">
+      <input type="number" id="light_on_input" min="0" max="24" placeholder="set light on time" style="width: 200px;">
+      <input type="number" id="light_off_input" min="0" max="24" placeholder="set light off time" style="width: 200px;">
+      <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <legend class="mt-4">Manual Control</legend>
+
+    <div class="man_toggle_buttons">
+      <button %CLASS_HUM_CONTROL% type="button" data-bs-toggle="modal" id="hum_button_modal" style="width: 100px"
+        data-bs-target="#toggle_hum_modal">Humidifier</button>
+      <div class="modal fade" id="toggle_hum_modal" tabindex="-1" aria-labelledby="disableModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              Do you really want to toggle manual humidifying?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="toogle_hum">Toggle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button %CLASS_HUM_MAN% style="width: 70px" type="button" id="hum_button_toggle"
+        %HUM_MAN_DIS%>%HUM_MAN_TEXT%</button>
+
+      <button %CLASS_TEMP_CONTROL% type="button" data-bs-toggle="modal" id="temp_button_modal" style="width: 100px"
+        data-bs-target="#toggle_heating_modal">Heater</button>
+      <div class="modal fade" id="toggle_heating_modal" tabindex="-1" aria-labelledby="disableModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              Do you really want to toggle manual heating?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="toggle_temp">Toggle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button %CLASS_TEMP_MAN% style="width: 70px" type="button" id="temp_button_toggle"
+        %TEMP_MAN_DIS%>%TEMP_MAN_TEXT%</button>
+
+      <button %CLASS_FAN_CONTROL% type="button" data-bs-toggle="modal" id="fan_button_modal" style="width: 100px"
+        data-bs-target="#disable_fan_modal">Ventilator</button>
+      <div class="modal fade" id="disable_fan_modal" tabindex="-1" aria-labelledby="disableModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              Do you really want to toogle manual ventilation?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="toggle_fan">Toggle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button %CLASS_FAN_MAN% style="width: 70px" type="button" id="fan_button_toggle"
+        %FAN_MAN_DIS%>%FAN_MAN_TEXT%</button>
+
+      <button %CLASS_LIGHT_CONTROL% type="button" data-bs-toggle="modal" id="light_button_modal" style="width: 100px"
+        data-bs-target="#disable_light_modal">Light</button>
+      <div class="modal fade" id="disable_light_modal" tabindex="-1" aria-labelledby="disableModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              Do you really want to toggle manual light?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="toggle_light">Toggle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button %CLASS_LIGHT_MAN% style="width: 70px" type="button" id="light_button_toggle"
+        %LIGHT_MAN_DIS%>%LIGHT_MAN_TEXT%</button>
+    </div>
+  </div>
+</body>
+
+<footer>
+  <p>Copyright (C) - Mushroom Fridge - 2022 - Marvin Kordis </p>
+</footer>
+
+
+<script>
+  var gateway = `ws://${window.location.hostname}/ws`;
+  var websocket;
+  var value;
+
+  window.addEventListener('load', onLoad);
+
+  function initWebSocket() {
+    console.log('Trying to open a WebSocket connection...');
+    websocket = new WebSocket(gateway);
+    websocket.onopen = onOpen;
+    websocket.onclose = onClose;
+    websocket.onmessage = onMessage;
+  }
+
+  function onOpen(event) {
+    console.log('Connection opened');
+  }
+  function onClose(event) {
+    console.log('Connection closed');
+    setTimeout(initWebSocket, 2000);
+  }
+
+  function onMessage(event) {
+    var myObj = JSON.parse(event.data);
+    var keys = Object.keys(myObj);
+
+    // console.log(event.data);
+
+    if (myObj.b == true) {
+
+      if (myObj.h_btn == true) {
+        document.getElementById("hum_button_data_on").style.display = "block";
+        document.getElementById("hum_button_data_off").style.display = "none";
+      }
+
+      if (myObj.h_btn == false) {
+        document.getElementById("hum_button_data_on").style.display = "none";
+        document.getElementById("hum_button_data_off").style.display = "block";
+      }
+
+      if (myObj.t_btn) {
+        document.getElementById("temp_button_data_on").style.display = "block";
+        document.getElementById("temp_button_data_off").style.display = "none";
+      }
+
+      if (myObj.t_btn == false) {
+        document.getElementById("temp_button_data_on").style.display = "none";
+        document.getElementById("temp_button_data_off").style.display = "block";
+      }
+
+      if (myObj.f_btn) {
+        document.getElementById("fan_button_data_on").style.display = "block";
+        document.getElementById("fan_button_data_off").style.display = "none";
+      }
+
+      if (myObj.f_btn == false) {
+        document.getElementById("fan_button_data_on").style.display = "none";
+        document.getElementById("fan_button_data_off").style.display = "block";
+      }
+
+      if (myObj.l_btn) {
+        document.getElementById("light_button_data_on").style.display = "block";
+        document.getElementById("light_button_data_off").style.display = "none";
+      }
+
+      if (myObj.l_btn == false) {
+        document.getElementById("light_button_data_on").style.display = "none";
+        document.getElementById("light_button_data_off").style.display = "block";
+      }
+    }
+
+    if (myObj.m == true) {
+
+      if (myObj.h_man) {
+        document.getElementById("hum_button_modal").className = "btn btn-primary";
+        document.getElementById("hum_button_toggle").disabled = false;
+      }
+
+      if (myObj.h_man == false) {
+        document.getElementById("hum_button_modal").className = "btn btn-light";
+        document.getElementById("hum_button_toggle").className = "btn btn-secondary";
+        document.getElementById("hum_button_toggle").disabled = true;
+        document.getElementById("hum_button_toggle").innerHTML = "off";
+
+      }
+
+      if (myObj.h_en) {
+        document.getElementById("hum_button_toggle").className = "btn btn-primary";
+        document.getElementById("hum_button_toggle").innerHTML = "on";
+
+      }
+      if (myObj.h_en == false) {
+        document.getElementById("hum_button_toggle").className = "btn btn-secondary";
+        document.getElementById("hum_button_toggle").innerHTML = "off";
+
+      }
+
+      if (myObj.f_man) {
+        document.getElementById("fan_button_modal").className = "btn btn-primary";
+        document.getElementById("fan_button_toggle").disabled = false;
+      }
+
+      if (myObj.f_man == false) {
+        document.getElementById("fan_button_modal").className = "btn btn-light";
+        document.getElementById("fan_button_toggle").className = "btn btn-secondary";
+        document.getElementById("fan_button_toggle").disabled = true;
+        document.getElementById("fan_button_toggle").innerHTML = "off";
+
+      }
+
+      if (myObj.f_en) {
+        document.getElementById("fan_button_toggle").className = "btn btn-primary";
+        document.getElementById("fan_button_toggle").innerHTML = "on";
+
+      }
+      if (myObj.f_en == false) {
+        document.getElementById("fan_button_toggle").className = "btn btn-secondary";
+        document.getElementById("fan_button_toggle").innerHTML = "off";
+      }
+
+      if (myObj.t_man) {
+        document.getElementById("temp_button_modal").className = "btn btn-primary";
+        document.getElementById("temp_button_toggle").disabled = false;
+      }
+
+      if (myObj.t_man == false) {
+        document.getElementById("temp_button_modal").className = "btn btn-light";
+        document.getElementById("temp_button_toggle").className = "btn btn-secondary";
+        document.getElementById("temp_button_toggle").disabled = true;
+        document.getElementById("temp_button_toggle").innerHTML = "off";
+
+      }
+
+      if (myObj.t_en) {
+        document.getElementById("temp_button_toggle").className = "btn btn-primary";
+        document.getElementById("temp_button_toggle").innerHTML = "on";
+
+      }
+      if (myObj.t_en == false) {
+        document.getElementById("temp_button_toggle").className = "btn btn-secondary";
+        document.getElementById("temp_button_toggle").innerHTML = "off";
+      }
+
+      if (myObj.l_man) {
+        document.getElementById("light_button_modal").className = "btn btn-primary";
+        document.getElementById("light_button_toggle").disabled = false;
+      }
+
+      if (myObj.l_man == false) {
+        document.getElementById("light_button_modal").className = "btn btn-light";
+        document.getElementById("light_button_toggle").className = "btn btn-secondary";
+        document.getElementById("light_button_toggle").disabled = true;
+        document.getElementById("light_button_toggle").innerHTML = "off";
+
+      }
+
+      if (myObj.l_en) {
+        document.getElementById("light_button_toggle").className = "btn btn-primary";
+        document.getElementById("light_button_toggle").innerHTML = "on";
+
+      }
+      if (myObj.l_en == false) {
+        document.getElementById("light_button_toggle").className = "btn btn-secondary";
+        document.getElementById("light_button_toggle").innerHTML = "off";
+      }
+    }
+
+
+    if (myObj.s == true || myObj.p2 == true) {
+
+      for (var i = 1; i < keys.length; i++) {
+        var key = keys[i];
+        document.getElementById(key).innerHTML = myObj[key];
+      }
+
+    }
+
+  }
+
+  function onLoad(event) {
+    initWebSocket();
+    initButton();
+  }
+
+  function initButton() {
+
+    document.getElementById('reset_function').addEventListener('click', function () { send_function("RESET"); });
+    document.getElementById('OTA_toggle').addEventListener('click', function () { send_function("OTA"); });
+    document.getElementById('calibration').addEventListener('click', function () { send_function("calibration"); });
+    document.getElementById('toggle_heat').addEventListener('click', function () { send_function("toggle_heat"); });
+    document.getElementById('toggle_humidifyer').addEventListener('click', function () { send_function("toggle_humidifyer"); });
+    document.getElementById('toggle_lamp').addEventListener('click', function () { send_function("toggle_lamp"); });
+    document.getElementById('toggle_ventilator').addEventListener('click', function () { send_function("toggle_ventilator"); });
+    document.getElementById('toggle_bme').addEventListener('click', function () { send_function("toggle_bme"); });
+    document.getElementById('toggle_co2').addEventListener('click', function () { send_function("toggle_co2"); });
+    document.getElementById('toggle_sd').addEventListener('click', function () { send_function("toggle_sd"); });
+
+    document.getElementById('toogle_hum').addEventListener('click', function () { send_function("toogle_hum"); });
+    document.getElementById('hum_button_toggle').addEventListener('click', function () { send_function("hum_button_toggle"); });
+
+    document.getElementById('toggle_fan').addEventListener('click', function () { send_function("toogle_fan"); });
+    document.getElementById('fan_button_toggle').addEventListener('click', function () { send_function("fan_button_toggle"); });
+
+    document.getElementById('toggle_temp').addEventListener('click', function () { send_function("toogle_temp"); });
+    document.getElementById('temp_button_toggle').addEventListener('click', function () { send_function("temp_button_toggle"); });
+
+    document.getElementById('toggle_light').addEventListener('click', function () { send_function("toogle_light"); });
+    document.getElementById('light_button_toggle').addEventListener('click', function () { send_function("light_button_toggle"); });
+
+  }
+
+  function send_function(variable) {
+    websocket.send(variable);
+  }
+
+  function send_value(variable) {
+    var value_target = document.getElementById(variable).value;
+    websocket.send(variable + "&" + value_target.toString());
+  }
+
+  function send_multiple_value(variable_on, variable_off) {
+    var value_on = document.getElementById(variable_on).value;
+    var value_off = document.getElementById(variable_off).value;
+    websocket.send(variable_on + "&1" + value_on.toString() + "%" + variable_off + "&2" + value_off.toString());
+  }
+
+</script>
+
+</html>
+)rawliteral";

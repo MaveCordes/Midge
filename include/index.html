@@ -1,0 +1,508 @@
+const char index_html[] PROGMEM = R"rawliteral(
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/simplex/bootstrap.min.css'>
+    <link href='https://css.gg/css' rel='stylesheet'>
+
+    <style>
+        html {
+            font-size: 0.8rem;
+        }
+
+        h1 {
+            font-size: 1.7rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+        }
+
+        .row {
+            height: 244px;
+            line-height: 20px;
+            max-width: 946px;
+            margin: auto;
+        }
+
+        .inner {
+            box-sizing: border-box;
+            color: rgb(255, 255, 255);
+            display: block;
+            font-weight: 400;
+            height: 102px;
+            line-height: 22px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 10px;
+            max-width: 403px;
+        }
+
+        .box {
+            display: block;
+            margin: auto;
+            margin-top: 15px;
+            float: left;
+            height: 100px;
+            max-width: 295px;
+            border-radius: 15px;
+        }
+
+        .temperature {
+            background-color: rgb(231, 63, 27);
+        }
+
+        .humidity {
+            background-color: rgb(32, 140, 209);
+        }
+
+        .co2 {
+            background-color: rgb(153, 153, 155);
+        }
+
+        .sd_card {
+            background-color: rgb(0, 166, 90);
+        }
+
+        .fan {
+            background-color: rgb(90, 194, 242);
+        }
+
+        .ventilator_off {
+            background-color: rgb(90, 194, 242);
+        }
+
+        .light {
+            background-color: rgb(255, 217, 25);
+        }
+
+        .light_off {
+            background-color: rgb(5, 38, 60);
+        }
+
+        .icon {
+            color: rgba(0, 0, 0, 0.15);
+        }
+
+        .bootstrap {
+            position: relative;
+            transform: scale(0.28);
+            top: -190px;
+            right: -76px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <svg viewBox='0 0 490.469 490.469' width='35'>
+                <g>
+                    <path style='fill:#E6E6E6;'
+                        d='M371.61,425.085c-19.54,65.38-126.38,65.38-126.38,65.38s-106.83,0-126.37-65.38   c-15.81-52.85,19.37-117.34,33.42-170.54c3.34-12.61,5.48-24.58,5.48-35.61l87.47-141.79l87.48,141.79c0,11.03,2.14,23,5.48,35.61   C352.24,307.745,387.42,372.235,371.61,425.085z' />
+                    <path style='fill:#CCCCCC;'
+                        d='M245.23,249.875c33,0,64.42,2.45,92.96,4.67c-3.34-12.61-5.48-24.58-5.48-35.61l-87.48-141.79   l-0.009,0.019l0.006-0.02l-87.47,141.795c0,57.59-58.45,140.78-38.9,206.15c19.54,65.38,126.37,65.38,126.37,65.38   s-47.75,0-56.49-65.38c-5.575-41.699,3.032-90.641,9.998-135.568c3.526-22.741,23.062-39.631,46.075-39.645   C244.949,249.875,245.09,249.875,245.23,249.875z' />
+                    <path style='fill:#AD7136;'
+                        d='M481.775,163.069C481.775,73.008,375.872,0,245.234,0C114.597,0,8.694,73.008,8.694,163.069   s105.903,51.619,236.54,51.619S481.775,253.129,481.775,163.069z' />
+                    <path style='fill:#8C531F;'
+                        d='M139.836,163.07c0,33.696,6.603,49.409,17.926,55.865C70.425,225.685,8.694,231.823,8.694,163.07   c0-90.06,105.898-163.068,236.541-163.068C187.022,0.002,139.836,73.01,139.836,163.07z' />
+                    <g>
+                        <path style='fill:#CCCCCC;'
+                            d='M322.147,434.543c-6.676,0-10-8.468-5.09-13.006c4.965-4.589,13.194-0.482,12.554,6.24    C329.25,431.57,325.949,434.543,322.147,434.543z' />
+                        <path style='fill:#CCCCCC;'
+                            d='M318.717,407.723c-6.662,0-10.002-8.48-5.087-13.005c2.326-2.141,5.827-2.591,8.621-1.11    c2.827,1.499,4.396,4.754,3.855,7.901C325.498,405.057,322.314,407.723,318.717,407.723z' />
+                        <path style='fill:#CCCCCC;'
+                            d='M341.607,416.443c-6.712,0-9.998-8.578-5.032-13.061c2.448-2.21,6.138-2.549,8.953-0.837    c2.541,1.546,3.925,4.56,3.498,7.496C348.499,413.671,345.269,416.443,341.607,416.443z' />
+                    </g>
+                </g>
+            </svg>
+
+            <a class="navbar-brand" style="margin-left: 5px">Mushroom Fridge</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+                aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/settings">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sdcard">SD Card</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/webserial">WebSerial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cam">ESP32CAM</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class='row'>
+
+        <div class='box temperature'>
+
+            <div class='inner'>
+
+                <p>Temperature</p>
+                <h3>
+                    <div class="Sensor_Value"><span id="t">%TEMPERATURE%</span> &#176C</div>
+                </h3>
+
+            </div>
+
+            <div class="icon bootstrap">
+
+                <div id="temp_icon_low" %TEMP_ICON_LOW%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path d='M8 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z' />
+                        <path
+                            d='M8 0a2.5 2.5 0 0 0-2.5 2.5v7.55a3.5 3.5 0 1 0 5 0V2.5A2.5 2.5 0 0 0 8 0zM6.5 2.5a1.5 1.5 0 1 1 3 0v7.987l.167.15a2.5 2.5 0 1 1-3.333 0l.166-.15V2.5z' />
+                    </svg>
+                </div>
+                <div id="temp_icon_2nd" %TEMP_ICON_2ND%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path d='M9.5 12.5a1.5 1.5 0 1 1-2-1.415V9.5a.5.5 0 0 1 1 0v1.585a1.5 1.5 0 0 1 1 1.415z' />
+                        <path
+                            d='M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z' />
+                    </svg>
+                </div>
+                <div id="temp_icon_3rd" %TEMP_ICON_3RD%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path d='M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415z' />
+                        <path
+                            d='M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z' />
+                    </svg>
+                </div>
+                <div id="temp_icon_high" %TEMP_ICON_HIGH%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path d='M9.5 12.5a1.5 1.5 0 1 1-2-1.415V2.5a.5.5 0 0 1 1 0v8.585a1.5 1.5 0 0 1 1 1.415z' />
+                        <path
+                            d='M5.5 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM8 1a1.5 1.5 0 0 0-1.5 1.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0l-.166-.15V2.5A1.5 1.5 0 0 0 8 1z' />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class='box humidity'>
+
+            <div class='inner'>
+
+                <p>Humidity</p>
+                <h3>
+                    <div class="Sensor_Value"><span id="h">%HUMIDITY%</span> &#37</div>
+                </h3>
+
+            </div>
+
+            <div class="icon bootstrap">
+
+                <div id="hum_icon_low" %HUM_ICON_LOW%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule='evenodd'
+                            d='M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10a5 5 0 0 0 10 0c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z' />
+                        <path fill-rule='evenodd'
+                            d='M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z' />
+                    </svg>
+                </div>
+                <div id="hum_icon_2nd" %HUM_ICON_2ND%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path fill-rule='evenodd'
+                            d='M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10c0 0 2.5 1.5 5 .5s5-.5 5-.5c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z' />
+                        <path fill-rule='evenodd'
+                            d='M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z' />
+                    </svg>
+                </div>
+                <div id="hum_icon_high" %HUM_ICON_HIGH%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d='M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6ZM6.646 4.646l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448c.82-1.641 1.717-2.753 2.093-3.13Z' />
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+
+        <div class='box co2'>
+
+            <div class='inner'>
+
+                <p>CO2</p>
+                <h3>
+                    <div class="Sensor_Value"><span id="c">%CO2%</span> ppm</div>
+                </h3>
+
+            </div>
+
+            <div class="icon bootstrap">
+
+                <div id="co2_icon_low" %CO2_ICON_LOW%> <svg fill="currentColor" viewBox="0 0 16 16">
+                        <path
+                            d='M16 7.5a2.5 2.5 0 0 1-1.456 2.272 3.513 3.513 0 0 0-.65-.824 1.5 1.5 0 0 0-.789-2.896.5.5 0 0 1-.627-.421 3 3 0 0 0-5.22-1.625 5.587 5.587 0 0 0-1.276.088 4.002 4.002 0 0 1 7.392.91A2.5 2.5 0 0 1 16 7.5z' />
+                        <path
+                            d='M7 5a4.5 4.5 0 0 1 4.473 4h.027a2.5 2.5 0 0 1 0 5H3a3 3 0 0 1-.247-5.99A4.502 4.502 0 0 1 7 5zm3.5 4.5a3.5 3.5 0 0 0-6.89-.873.5.5 0 0 1-.51.375A2 2 0 1 0 3 13h8.5a1.5 1.5 0 1 0-.376-2.953.5.5 0 0 1-.624-.492V9.5z' />
+
+                    </svg>
+                </div>
+                <div id="co2_icon_high" %CO2_ICON_HIGH%> <svg fill="currentColor" viewBox="0 0 16 16">
+                        <path d='M11.473 9a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 14h8.5a2.5 2.5 0 1 0-.027-5z' />
+                        <path
+                            d='M14.544 9.772a3.506 3.506 0 0 0-2.225-1.676 5.502 5.502 0 0 0-6.337-4.002 4.002 4.002 0 0 1 7.392.91 2.5 2.5 0 0 1 1.17 4.769z' />
+
+                    </svg>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class='box sd_card'>
+
+            <div class='inner'>
+
+                <p>SD Card</p>
+                <h1> <span id="sd" style="position:relative; top:10px;">%SD_CARD_NAME%</span></h1>
+
+
+            </div>
+
+            <div class="icon bootstrap">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-thermometer-high"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M14 4.5V14a2 2 0 0 1-2 2h-2v-1h2a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.928 15.849v-3.337h1.136v-.662H0v.662h1.134v3.337h.794Zm4.689-3.999h-.894L4.9 13.289h-.035l-.832-1.439h-.932l1.228 1.983-1.24 2.016h.862l.853-1.415h.035l.85 1.415h.907l-1.253-1.992 1.274-2.007Zm1.93.662v3.337h-.794v-3.337H6.619v-.662h3.064v.662H8.546Z" />
+
+                </svg>
+
+            </div>
+
+        </div>
+
+        <div class='box fan'>
+
+            <div class='inner'>
+
+                <p>Ventilator</p>
+
+                <h3><span id='f' class=''> %FAN%</span></h3>
+
+            </div>
+
+            <div class='icon bootstrap'>
+
+                <div id="fan_icon_on" %FAN_ICON_ON%> <svg fill='currentColor' viewBox='0 0 16 16'>
+                        <path
+                            d='M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5zm-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2zM0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5z' />
+                    </svg>
+                </div>
+                <div id="fan_icon_off" %FAN_ICON_OFF%> <svg fill='currentColor' viewBox='0 0 16 16'>
+                        <path
+                            d='M.036 3.314a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0L.314 3.964a.5.5 0 0 1-.278-.65zm0 3a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0L.314 6.964a.5.5 0 0 1-.278-.65zm0 3a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0L.314 9.964a.5.5 0 0 1-.278-.65zm0 3a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.757-.703a.5.5 0 0 1-.278-.65z' />
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="light" class='box %LIGHT_CLASS%'>
+
+            <div class='inner'>
+
+                <p>Light</p>
+                <h3> <span id="l" class="">%LIGHTTIME%</span></h3>
+
+            </div>
+
+            <div class="icon bootstrap">
+
+                <div id="light_icon_on" %LIGHT_ICON_ON%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d='M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z' />
+                    </svg>
+                </div>
+
+                <div id="light_icon_off" %LIGHT_ICON_OFF%> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d='M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z' />
+                    </svg>
+                </div>
+
+            </div>
+
+        </div>
+</body>
+
+<footer>
+    <p> Copyright (C) - Mushroom Fridge - 2022 - Marvin Kordis </p>
+</footer>
+
+<script>
+
+    // websocket
+    var gateway = `ws://${window.location.hostname}/ws`;
+    var websocket;
+
+    window.addEventListener('load', onLoad);
+
+    function initWebSocket() {
+        //   console.log('Trying to open a WebSocket connection...');
+        websocket = new WebSocket(gateway);
+        websocket.onopen = onOpen;
+        websocket.onclose = onClose;
+        websocket.onmessage = onMessage;
+    }
+
+    function onOpen(event) {
+    }
+    function onClose(event) {
+        setTimeout(initWebSocket, 2000);
+    }
+
+    function onMessage(event) {
+        var myObj = JSON.parse(event.data);
+        var keys = Object.keys(myObj);
+
+        if (myObj.i == true) {
+
+            if (myObj.t_ico == 1) {
+                document.getElementById("temp_icon_low").style.display = "block";
+                document.getElementById("temp_icon_2nd").style.display = "none";
+                document.getElementById("temp_icon_3rd").style.display = "none";
+                document.getElementById("temp_icon_high").style.display = "none";
+
+            }
+
+            if (myObj.t_ico == 2) {
+                document.getElementById("temp_icon_low").style.display = "none";
+                document.getElementById("temp_icon_2nd").style.display = "block";
+                document.getElementById("temp_icon_3rd").style.display = "none";
+                document.getElementById("temp_icon_high").style.display = "none";
+
+            }
+
+
+            if (myObj.t_ico == 3) {
+                document.getElementById("temp_icon_low").style.display = "none";
+                document.getElementById("temp_icon_2nd").style.display = "none";
+                document.getElementById("temp_icon_3rd").style.display = "block";
+                document.getElementById("temp_icon_high").style.display = "none";
+
+            }
+
+            if (myObj.t_ico == 4) {
+                document.getElementById("temp_icon_low").style.display = "none";
+                document.getElementById("temp_icon_2nd").style.display = "none";
+                document.getElementById("temp_icon_3rd").style.display = "none";
+                document.getElementById("temp_icon_high").style.display = "block";
+            }
+
+            if (myObj.h_ico == 1) {
+                document.getElementById("hum_icon_low").style.display = "block";
+                document.getElementById("hum_icon_2nd").style.display = "none";
+                document.getElementById("hum_icon_high").style.display = "none";
+
+            }
+
+            if (myObj.h_ico == 2) {
+                document.getElementById("hum_icon_low").style.display = "none";
+                document.getElementById("hum_icon_2nd").style.display = "block";
+                document.getElementById("hum_icon_high").style.display = "none";
+            }
+
+
+            if (myObj.h_ico == 3) {
+                document.getElementById("hum_icon_low").style.display = "none";
+                document.getElementById("hum_icon_2nd").style.display = "none";
+                document.getElementById("hum_icon_high").style.display = "block";
+            }
+
+            if (myObj.c_ico) {
+                document.getElementById("co2_icon_low").style.display = "block";
+                document.getElementById("co2_icon_high").style.display = "none";
+            }
+
+
+            if (myObj.c_ico == false) {
+                document.getElementById("co2_icon_low").style.display = "none";
+                document.getElementById("co2_icon_high").style.display = "block";
+            }
+
+            if (myObj.f_ico) {
+                document.getElementById("fan_icon_on").style.display = "block";
+                document.getElementById("fan_icon_off").style.display = "none";
+            }
+
+
+            if (myObj.f_ico == false) {
+                document.getElementById("fan_icon_on").style.display = "none";
+                document.getElementById("fan_icon_off").style.display = "block";
+            }
+
+            if (myObj.l_ico) {
+                document.getElementById("light_icon_on").style.display = "block";
+                document.getElementById("light_icon_off").style.display = "none";
+                document.getElementById("light").className = "box light";
+            }
+
+            if (myObj.l_ico == false) {
+                document.getElementById("light_icon_on").style.display = "none";
+                document.getElementById("light_icon_off").style.display = "block";
+                document.getElementById("light").className = "box light_off";
+            }
+        }
+
+
+        if (myObj.s == true || myObj.p1 == true) {
+            // console.log(myObj);
+            // console.log(keys);
+            for (var i = 1; i < keys.length; i++) {
+                var key = keys[i];
+                document.getElementById(key).innerHTML = myObj[key];
+            }
+        }
+    }
+
+    function onLoad(event) {
+        initWebSocket();
+    }
+
+</script>
+
+
+</html>
+
+)rawliteral";
