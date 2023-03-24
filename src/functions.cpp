@@ -673,6 +673,19 @@ void sensor_control()
   WebSerial.print("AVG10.mean:");
   WebSerial.println(avg_hum_10.mean());
 
+  TelnetStream.print("BME1:");
+  TelnetStream.println(bme_humidity);
+  TelnetStream.print("BME2:");
+  TelnetStream.println(bme_humidity2);
+  TelnetStream.print("Float10:");
+  TelnetStream.println(hum10);
+  TelnetStream.print("Hum");
+  TelnetStream.println(humidity);
+  // WebSerial.print("AVG10:");
+  // WebSerial.println(avg_hum_10);
+  TelnetStream.print("AVG10.mean:");
+  TelnetStream.println(avg_hum_10.mean());
+
   // Serial.println();
 }
 

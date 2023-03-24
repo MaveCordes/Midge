@@ -14,6 +14,7 @@
 #include <time.h>
 #include <BasicOTA.hpp>
 #include <WebSerial.h>
+#include <TelnetStream.h>
 
 
 

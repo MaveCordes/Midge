@@ -396,6 +396,8 @@ void setup()
 
   sensor_control();
 
+  TelnetStream.begin();
+
   Serial.println("Setup finished");
 }
 
