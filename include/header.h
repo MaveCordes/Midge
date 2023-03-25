@@ -7,6 +7,7 @@
 #include <sdcard.html>
 #include <about.html>
 #include <cam.html>
+#include <telsocket.html>
 #include <SD.h>
 #include <RTClib.h>
 #include <Preferences.h>

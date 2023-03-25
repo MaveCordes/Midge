@@ -1,4 +1,4 @@
-const char about_html[] PROGMEM = R"rawliteral(
+const char telsocket_html[] PROGMEM = R"rawliteral(
 
 <!DOCTYPE HTML>
 <html>
@@ -89,7 +89,7 @@ const char about_html[] PROGMEM = R"rawliteral(
           <li class="nav-item">
             <a class="nav-link" href="/cam">ESP32CAM</a>
           </li>
-             <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="/telsocket">Telsocket</a>
           </li>
         </ul>
@@ -98,11 +98,37 @@ const char about_html[] PROGMEM = R"rawliteral(
     </div>
   </nav>
 
+  <textarea id="output" rows="20" cols="50" readonly></textarea>
+
 </body>
 
 <footer>
   <p> Copyright (C) - Mushroom Fridge - 2022 - Marvin Kordis </p>
 </footer>
+
+<script>
+
+    const proxyServer = `ws://192.168.0.106:22/ws`;
+    const outputElement = document.getElementById('output');
+
+    const socket = new WebSocket(proxyServer);
+
+    socket.addEventListener('open', (event) => {
+        console.log('WebSocket connection opened:', event);
+    });
+
+    socket.addEventListener('message', (event) => {
+        console.log('WebSocket message received:', event.data);
+    });
+
+    socket.addEventListener('close', (event) => {
+        console.log('WebSocket connection closed:', event);
+    });
+
+    socket.addEventListener('error', (event) => {
+        console.error('WebSocket error:', event);
+    });
+</script>
 
 </html>
 )rawliteral";
