@@ -686,6 +686,18 @@ void sensor_control()
   TelnetStream.print("AVG10.mean:");
   TelnetStream.println(avg_hum_10.mean());
 
+  // doc["p"] = true;
+  // doc["mssg"] = "test123";
+  // len = serializeJson(doc, json_data);
+  // ws.textAll(json_data, len);
+  // doc.clear();
+
+  iSerial.println("test123");
+  iSerial.println(hum10);
+
+
+
+
   // Serial.println();
 }
 

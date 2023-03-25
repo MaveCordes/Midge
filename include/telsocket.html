@@ -33,7 +33,34 @@ const char telsocket_html[] PROGMEM = R"rawliteral(
 
     footer {
       text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
+
+   .output-wrapper {
+    margin: 1cm;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    overflow-y: scroll;
+    max-height: calc(100vh - 2cm - 3rem); /* Subtract margin and footer height */
+  }
+  
+  #output {
+    white-space: pre-wrap;
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+  }
+
+  .clear-button {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+  }
   </style>
 
 </head>
@@ -98,7 +125,12 @@ const char telsocket_html[] PROGMEM = R"rawliteral(
     </div>
   </nav>
 
-  <textarea id="output" rows="20" cols="50" readonly></textarea>
+  <button class="btn btn-secondary clear-button" id="clearButton">Clear Output</button>
+
+
+  <div class="output-wrapper">
+    <div id="output"></div>
+  </div>
 
 </body>
 
@@ -107,27 +139,64 @@ const char telsocket_html[] PROGMEM = R"rawliteral(
 </footer>
 
 <script>
+  var gateway = `ws://${window.location.hostname}/ws`;
+  var websocket;
+  var output = document.getElementById('output');
 
-    const proxyServer = `ws://192.168.0.106:22/ws`;
-    const outputElement = document.getElementById('output');
+  window.addEventListener('load', onLoad);
 
-    const socket = new WebSocket(proxyServer);
+  function initWebSocket() {
+    console.log('Trying to open a WebSocket connection...');
+    websocket = new WebSocket(gateway);
+    websocket.onopen = onOpen;
+    websocket.onclose = onClose;
+    websocket.onmessage = onMessage;
+  }
 
-    socket.addEventListener('open', (event) => {
-        console.log('WebSocket connection opened:', event);
-    });
+  function onOpen(event) {
+    console.log('Connection opened');
+  }
+  function onClose(event) {
+    console.log('Connection closed');
+    setTimeout(initWebSocket, 2000);
+  }
 
-    socket.addEventListener('message', (event) => {
-        console.log('WebSocket message received:', event.data);
-    });
+  function onMessage(event) {
+    var myObj = JSON.parse(event.data);
+    var keys = Object.keys(myObj);
 
-    socket.addEventListener('close', (event) => {
-        console.log('WebSocket connection closed:', event);
-    });
+    console.log(event.data);
+    
+   // if (myObj.p == true) {
+      //output.textContent += myObj.mssg;
+     // output.textContent += myObj.ts + ": ";
+     // output.textContent += myObj.msg;
+     // output.scrollTop = output.scrollHeight;  
+  //}
 
-    socket.addEventListener('error', (event) => {
-        console.error('WebSocket error:', event);
-    });
+  if (myObj.p == true) {
+    if (!window.tempMessage) {
+      window.tempMessage = "";
+    }
+    if (myObj.msg !== "\n") {
+      window.tempMessage += myObj.msg;
+    } else {
+      output.textContent += myObj.ts + ": " + window.tempMessage;
+      output.textContent += "\n";
+      output.scrollTop = output.scrollHeight;
+      window.tempMessage = "";
+    }
+  }
+}
+
+  function onLoad(event) {
+    initWebSocket();
+  }
+
+  document.getElementById('clearButton').addEventListener('click', function() {
+    output.textContent = '';
+  });
+
 </script>
 
 </html>

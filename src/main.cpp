@@ -20,9 +20,49 @@ struct tm timeinfo;
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
+//wSerial
+// class iSerialClass : public Stream {
+// public:
+//   size_t write(uint8_t c) {
+//     char buffer[2] = {(char)c, '\0'};
+//     sendJsonMessage(buffer);
+//     return 1;
+//   }
+
+//   int available() {
+//     return 0; // Not needed for this implementation
+//   }
+
+//   int read() {
+//     return -1; // Not needed for this implementation
+//   }
+
+//   int peek() {
+//     return -1; // Not needed for this implementation
+//   }
+
+//   void flush() {
+//     // Not needed for this implementation
+//   }
+
+// private:
+//   void sendJsonMessage(const char* message) {
+//     DynamicJsonDocument doc(1024);
+//     char json_data[1024];
+//     doc["p"] = true;
+//     doc["mssg"] = message;
+//     size_t len = serializeJson(doc, json_data);
+//     ws.textAll(json_data, len);
+//     doc.clear();
+//   }
+// };
+
+iSerialClass iSerial;
+
+//wSerial
+
 //BasicOTA 
 BasicOTA OTA;
-
 
 // LCD Menu Lib
 uint8_t _LCDML_DISP_cols = 20;
@@ -408,6 +448,19 @@ void loop()
   LCDML.loop_menu();
   OTA.handle();  
 
+  //Telnet v0.4
+    // if (TelnetStream.available() > 0) {
+    // String message = "";
+    // while (TelnetStream.available() > 0) {
+    //   char c = TelnetStream.read();
+    //   message += c;
+    //   delay(1);
+    // }
+    //   ws.textAll(message);
+    //   message.clear();  
+    //   }
+  //Telnet v0.4
+
   if (millis() >= loop_timer_short + 300)
   {
     // FAN CONTROL
@@ -422,9 +475,9 @@ void loop()
     //  SD Control
     SD_control();
 
-    send_timer_value();
+    //send_timer_value();
 
-    send_sensor_value();
+    //send_sensor_value();
 
     loop_timer_short = millis();
   }

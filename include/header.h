@@ -85,3 +85,65 @@ extern struct tm timeinfo;
 void toggle_light();
 // extern bool new_light;
 extern bool toggle_ON_var;
+
+//iSerial
+class iSerialClass : public Stream {
+public:
+  size_t write(uint8_t c) {
+    char buffer[2] = {(char)c, '\0'};
+    sendJsonMessage(buffer);
+    return 1;
+  }
+
+  int available() {
+    return 0; // Not needed for this implementation
+  }
+
+  int read() {
+    return -1; // Not needed for this implementation
+  }
+
+  int peek() {
+    return -1; // Not needed for this implementation
+  }
+
+  void flush() {
+    // Not needed for this implementation
+  }
+
+// private:
+//   void sendJsonMessage(const char* message) {
+//     DynamicJsonDocument doc(1024);
+//     char json_data[1024];
+//     doc["p"] = true;
+//     doc["mssg"] = message;
+//     size_t len = serializeJson(doc, json_data);
+//     ws.textAll(json_data, len);
+//     doc.clear();
+//   }
+private:
+  void sendJsonMessage(const char* message) {
+    DynamicJsonDocument doc(1024);
+    char json_data[1024];
+
+    struct tm timeinfo;
+    if (!getLocalTime(&timeinfo)) {
+      Serial.println("Failed to obtain time");
+      return;
+    }
+
+    char timestamp[64];
+    strftime(timestamp, sizeof(timestamp), "%H:%M:%S", &timeinfo); // Only use HH:MM:SS
+
+    doc["p"] = true;
+    doc["msg"] = message;
+    doc["ts"] = timestamp; // Add the timestamp to the JSON object
+    size_t len = serializeJson(doc, json_data);
+    ws.textAll(json_data, len);
+    doc.clear();
+  }
+
+};
+
+extern iSerialClass iSerial;
+//iSerial
