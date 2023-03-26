@@ -50,6 +50,8 @@ void async_server_on()
             { if(!request->authenticate(http_username.c_str(), http_password.c_str()))
               return request->requestAuthentication();
               request->send_P(200, "text/html", iSerial_html, processor); });
+  server.on("/favicon.png", HTTP_GET, [](AsyncWebServerRequest *request){
+              request->send(SPIFFS, "/favicon.png", "image/png"); });
   server.onNotFound(notFound);
   // Alternative for .onNotFound
   // server.serveStatic("/", SD, "");

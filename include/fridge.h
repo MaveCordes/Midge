@@ -3,6 +3,7 @@
 #include <Adafruit_BME680.h>
 #include <Average.h>
 #include <MHZ19.h> 
+#include <SPIFFS.h>
 
 // LCDMenulib
 void lcdml_menu_display();

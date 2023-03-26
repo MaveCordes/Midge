@@ -254,6 +254,11 @@ void setup()
   Serial.begin(115200);
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
 
+  if(!SPIFFS.begin()){
+     Serial.println("An Error has occurred while mounting SPIFFS");
+     return;
+}
+
   // NVM store credentials, Readme in credentials.cpp documentation
   // NVM_store_credentials();
 
