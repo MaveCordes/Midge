@@ -125,7 +125,6 @@ const char iSerial_html[] PROGMEM = R"rawliteral(
 
   <button class="btn btn-secondary clear-button" id="clearButton">Clear Output</button>
 
-
   <div class="output-wrapper">
     <div id="output"></div>
   </div>
@@ -159,59 +158,35 @@ const char iSerial_html[] PROGMEM = R"rawliteral(
     setTimeout(initWebSocket, 2000);
   }
 
-//   function onMessage(event) {
-//     var myObj = JSON.parse(event.data);
-//     var keys = Object.keys(myObj);
+  function onMessage(event) {
+    var myObj = JSON.parse(event.data);
+    var keys = Object.keys(myObj);
 
-//     console.log(event.data);
+    //console.log(event.data);
 
-//   if (myObj.p == true) {
-//     if (!window.tempMessage) {
-//       window.tempMessage = "";
-//     }
-//     if (myObj.msg !== "\n") {
-//       window.tempMessage += myObj.msg;
-//     } else {
-//       output.textContent += myObj.ts + ": " + window.tempMessage;
-//       output.textContent += "\n";
-//       output.scrollTop = output.scrollHeight;
-//       window.tempMessage = "";
-//     }
-//   }
-// }
+    if (myObj.p == true) {
+      var message = myObj.msg.replace("\r", ""); // Remove the carriage return
+      output.textContent += myObj.ts + ": " + message + "\n";
 
-// function onMessage(event) {
-//   var myObj = JSON.parse(event.data);
-//   var keys = Object.keys(myObj);
-
-//   console.log(event.data);
-
-//   if (myObj.p == true) {
-//     if (!window.tempMessage) {
-//       window.tempMessage = "";
-//     }
-//     if (myObj.msg !== "\n") {
-//       window.tempMessage += myObj.msg;
-//     } else {
-//       output.textContent += myObj.ts + ": " + window.tempMessage + "\n";
-//       output.scrollTop = output.scrollHeight;
-//       window.tempMessage = "";
-//     }
-//   }
-// }
-
-function onMessage(event) {
-  var myObj = JSON.parse(event.data);
-  var keys = Object.keys(myObj);
-
-  //console.log(event.data);
-
-  if (myObj.p == true) {
-    var message = myObj.msg.replace("\r", ""); // Remove the carriage return
-    output.textContent += myObj.ts + ": " + message + "\n";
-    output.scrollTop = output.scrollHeight;
+      // Save sent messages to localStorage
+      localStorage.setItem('sentMessages', output.textContent);
+    
+      // Scroll to the new text
+      requestAnimationFrame(function() {
+        output.parentElement.scrollTop = output.parentElement.scrollHeight;
+      });
+    }
   }
-}
+
+   // Load sent messages from localStorage
+   var sentMessages = localStorage.getItem('sentMessages');
+   if (sentMessages) {
+     output.textContent = sentMessages;
+     // Scroll to the bottom
+     requestAnimationFrame(function() {
+       output.parentElement.scrollTop = output.parentElement.scrollHeight;
+     });
+   }
 
   function onLoad(event) {
     initWebSocket();
@@ -219,6 +194,7 @@ function onMessage(event) {
 
   document.getElementById('clearButton').addEventListener('click', function() {
     output.textContent = '';
+    localStorage.removeItem('sentMessages');
   });
 
 </script>

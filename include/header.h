@@ -189,7 +189,7 @@ private:
   String buffer; // Add this line to create a buffer
 
   void sendJsonMessage(const char* message) {
-    DynamicJsonDocument ddoc(1024);
+    DynamicJsonDocument doc(1024);
     char json_data[1024];
 
     struct tm timeinfo;
@@ -201,12 +201,12 @@ private:
     char timestamp[64];
     strftime(timestamp, sizeof(timestamp), "%H:%M:%S", &timeinfo); // Only use HH:MM:SS
 
-    ddoc["p"] = true;
-    ddoc["msg"] = message;
-    ddoc["ts"] = timestamp; // Add the timestamp to the JSON object
-    size_t len = serializeJson(ddoc, json_data);
+    doc["p"] = true;
+    doc["msg"] = message;
+    doc["ts"] = timestamp; // Add the timestamp to the JSON object
+    size_t len = serializeJson(doc, json_data);
     ws.textAll(json_data, len);
-    ddoc.clear();
+    doc.clear();
   }
 };
 

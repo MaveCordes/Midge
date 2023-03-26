@@ -713,10 +713,10 @@ void printLocalTime()
 void printHeapInfo() {
   uint32_t freeHeap = ESP.getFreeHeap();
   uint32_t totalHeap = ESP.getHeapSize();
-  Serial.println("");
-  Serial.print("Free heap memory, total heap: ");
-  Serial.print(freeHeap);
-  Serial.print(",");
-  Serial.println(totalHeap);
-  Serial.println("");
+  iSerial.println("");
+  iSerial.print("Free heap memory, total heap: ");
+  iSerial.print(freeHeap);
+  iSerial.print(",");
+  iSerial.println(totalHeap);
+  iSerial.println("");
 }

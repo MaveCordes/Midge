@@ -10,7 +10,9 @@ char json_data[1024];
 size_t len;
 
 //ticker intervals
-Ticker taskTicker;
+Ticker sensorTicker;
+Ticker serverTicker;
+
 const uint32_t sensorInterval = 25000;
 const uint16_t serverInterval = 1000;
 
@@ -404,8 +406,8 @@ void setup()
   sensor_control();
 
   //ticker v0.5
-  taskTicker.attach_ms(sensorInterval, sensorHandler);
-  taskTicker.attach_ms(serverInterval, serverHandler);
+  serverTicker.attach_ms(serverInterval, serverHandler);
+  sensorTicker.attach_ms(sensorInterval, sensorHandler);
 
   Serial.println("Setup finished");
 }
