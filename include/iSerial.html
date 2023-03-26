@@ -204,7 +204,7 @@ function onMessage(event) {
   var myObj = JSON.parse(event.data);
   var keys = Object.keys(myObj);
 
-  console.log(event.data);
+  //console.log(event.data);
 
   if (myObj.p == true) {
     var message = myObj.msg.replace("\r", ""); // Remove the carriage return

@@ -10,6 +10,12 @@ StaticJsonDocument<512> doc;
 char json_data[512];
 size_t len;
 
+//ticker
+Ticker taskTicker;
+uint32_t sensorInterval = 25000;
+uint32_t serverInterval = 1000;
+
+
 // Time
 const char *ntpServer = "europe.pool.ntp.org";
 const long gmtOffset_sec = 3600;
@@ -134,8 +140,8 @@ bool dis_rtc = false; // true to disable RTC
 uint8_t temperature = 0;
 uint8_t humidity = 0;
 uint16_t co2 = 0;
-unsigned long loop_timer_short = 0;
-unsigned long loop_timer_long = 0;
+//unsigned long loop_timer_short = 0;
+//unsigned long loop_timer_long = 0;
 
 // fridge disable function ON/OFF
 bool OTA_var = true;
@@ -257,7 +263,7 @@ void setup()
   if(!SPIFFS.begin()){
      Serial.println("An Error has occurred while mounting SPIFFS");
      return;
-}
+  }
 
   // NVM store credentials, Readme in credentials.cpp documentation
   // NVM_store_credentials();
@@ -399,51 +405,47 @@ void setup()
 
   sensor_control();
 
+  //ticker
+  taskTicker.attach_ms(sensorInterval, sensorHandler);
+  taskTicker.attach_ms(serverInterval, serverHandler);
+
+  
+
   Serial.println("Setup finished");
 }
 
 void loop()
 {
-
   LCDML.loop_control();
   LCDML.loop_menu();
   OTA.handle();  
+}
 
-  if (millis() >= loop_timer_short + 1000)
-  {
-    // FAN CONTROL
-    ventilation_control();
+void serverHandler() {
+  ventilation_control();
 
-    // HUM CONTROL
-    water_control();
+  water_control();
 
-    // HEAT CONTROL
-    temperature_control();
+  temperature_control();
 
-    //  SD Control
-    SD_control();
+  SD_control();
 
-    send_timer_value();
+  send_timer_value();
+}
 
-    //send_sensor_value();
+void sensorHandler() {
+  ws.cleanupClients();
 
-    loop_timer_short = millis();
-  }
+  sensor_control();
 
-  if (millis() >= loop_timer_long + 25000)
-  {
-    ws.cleanupClients();
+  set_function();
 
-    // light_timer();
+  send_sensor_value();
 
-    sensor_control();
+  printHeapInfo();
 
-    // co2_control();
+  // light_timer();
 
-    set_function();
+  // co2_control();
 
-    send_sensor_value();
-
-    loop_timer_long = millis();
-  }
 }

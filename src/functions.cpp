@@ -709,3 +709,14 @@ void printLocalTime()
   }
   Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 }
+
+void printHeapInfo() {
+  uint32_t freeHeap = ESP.getFreeHeap();
+  uint32_t totalHeap = ESP.getHeapSize();
+  Serial.println("");
+  Serial.print("Free heap memory, total heap: ");
+  Serial.print(freeHeap);
+  Serial.print(",");
+  Serial.println(totalHeap);
+  Serial.println("");
+}

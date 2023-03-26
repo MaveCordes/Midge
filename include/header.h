@@ -17,7 +17,13 @@
 //#include <WebSerial.h>
 //#include <TelnetStream.h>
 
-
+//ticker
+//Ticker taskTicker;
+extern uint32_t sensorInterval;
+extern uint32_t serverInterval;
+void sensorHandler();
+void serverHandler();
+void printHeapInfo();
 
 // NVM Storage
 extern Preferences preferences;
