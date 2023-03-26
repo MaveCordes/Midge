@@ -19,8 +19,8 @@
 
 //ticker
 //Ticker taskTicker;
-extern uint32_t sensorInterval;
-extern uint32_t serverInterval;
+extern const uint32_t sensorInterval;
+extern const uint16_t serverInterval;
 void sensorHandler();
 void serverHandler();
 void printHeapInfo();
@@ -65,8 +65,8 @@ extern unsigned long light_run_time;
 extern unsigned long temp_run_time;
 
 // JSON
-extern StaticJsonDocument<512> doc;
-extern char json_data[512];
+extern StaticJsonDocument<1024> doc;
+extern char json_data[1024];
 extern size_t len;
 
 // RTC
@@ -189,7 +189,7 @@ private:
   String buffer; // Add this line to create a buffer
 
   void sendJsonMessage(const char* message) {
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument ddoc(1024);
     char json_data[1024];
 
     struct tm timeinfo;
@@ -201,12 +201,12 @@ private:
     char timestamp[64];
     strftime(timestamp, sizeof(timestamp), "%H:%M:%S", &timeinfo); // Only use HH:MM:SS
 
-    doc["p"] = true;
-    doc["msg"] = message;
-    doc["ts"] = timestamp; // Add the timestamp to the JSON object
-    size_t len = serializeJson(doc, json_data);
+    ddoc["p"] = true;
+    ddoc["msg"] = message;
+    ddoc["ts"] = timestamp; // Add the timestamp to the JSON object
+    size_t len = serializeJson(ddoc, json_data);
     ws.textAll(json_data, len);
-    doc.clear();
+    ddoc.clear();
   }
 };
 

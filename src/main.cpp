@@ -1,20 +1,18 @@
 #include <header.h>
 #include <fridge.h>
 
-
 // NVM Storage
 Preferences preferences;
 
 // JSON
-StaticJsonDocument<512> doc;
-char json_data[512];
+StaticJsonDocument<1024> doc;
+char json_data[1024];
 size_t len;
 
-//ticker
+//ticker intervals
 Ticker taskTicker;
-uint32_t sensorInterval = 25000;
-uint32_t serverInterval = 1000;
-
+const uint32_t sensorInterval = 25000;
+const uint16_t serverInterval = 1000;
 
 // Time
 const char *ntpServer = "europe.pool.ntp.org";
@@ -405,11 +403,9 @@ void setup()
 
   sensor_control();
 
-  //ticker
+  //ticker v0.5
   taskTicker.attach_ms(sensorInterval, sensorHandler);
   taskTicker.attach_ms(serverInterval, serverHandler);
-
-  
 
   Serial.println("Setup finished");
 }
@@ -447,5 +443,4 @@ void sensorHandler() {
   // light_timer();
 
   // co2_control();
-
 }

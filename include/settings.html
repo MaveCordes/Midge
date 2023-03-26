@@ -29,13 +29,9 @@ const char settings_html[] PROGMEM = R"rawliteral(
 
     }
 
-    .foot {
+    .cp {
       text-align: center;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .table,
@@ -43,6 +39,10 @@ const char settings_html[] PROGMEM = R"rawliteral(
     td {
       font-size: 0.9rem;
       border-bottom: 1px solid rgb(52, 52, 52);
+    }
+
+    .btn-submit {
+      margin-top: 0.5rem; /* adjust the margin value as needed */
     }
 
     .btn-primary,
@@ -404,57 +404,55 @@ const char settings_html[] PROGMEM = R"rawliteral(
     <form onsubmit="send_value('hum_target');window.location.reload();return false">
       <input type="number" id="hum_target" min="1" max="100" placeholder="set target Humidity in %"
         style="width: 200px;">
-      <input type="submit" value="Submit">
-    </form>
+        <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
+      </form>
     </p>
 
     <form onsubmit="send_value('temp_target');window.location.reload();return false">
       <input type="number" id="temp_target" min="1" max="35" placeholder="set target Temperature in °C"
         style="width: 200px;">
-      <input type="submit" value="Submit">
-    </form>
+        <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
+      </form>
     </p>
 
     <form onsubmit="send_value('co2_target');window.location.reload();return false">
       <input type="number" id="co2_target" min="1" max="4000" placeholder="set target CO2 in ppm" style="width: 200px;">
-      <input type="submit" value="Submit">
+      <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
     </form>
     </p>
 
     <form onsubmit="send_value('sd_time_target');window.location.reload();return false">
       <input type="number" id="sd_time_target" min="1" max="60" placeholder="set SD writetime in min"
         style="width: 200px;">
-      <input type="submit" value="Submit">
-    </form>
+        <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
+      </form>
     </p>
 
     <form onsubmit="send_multiple_value('hum_on_input','hum_off_input');window.location.reload();return false">
       <input type="number" id="hum_on_input" min="0" max="60" placeholder="set hum on time" style="width: 200px;">
       <input type="number" id="hum_off_input" min="0" max="60" placeholder="set hum off time" style="width: 200px;">
-      <input type="submit" value="Submit">
+      <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
     </form>
     </p>
-
 
     <form onsubmit="send_multiple_value('temp_on_input','temp_off_input');window.location.reload();return false">
       <input type="number" id="temp_on_input" min="0" max="60" placeholder="set heat on time" style="width: 200px;">
       <input type="number" id="temp_off_input" min="0" max="60" placeholder="set heat off time" style="width: 200px;">
-      <input type="submit" value="Submit">
+      <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
     </form>
     </p>
 
     <form onsubmit="send_multiple_value('fan_on_input','fan_off_input');window.location.reload();return false">
-      <input type="number" id="fan_on_input" name="FAN_ON_INPUT" min="0" max="60" placeholder="set FAN ON time"
-        style="width: 200px;">
+      <input type="number" id="fan_on_input" name="FAN_ON_INPUT" min="0" max="60" placeholder="set FAN ON time" style="width: 200px;">
       <input type="number" id="fan_off_input" min="0" max="60" placeholder="set fan off time" style="width: 200px;">
-      <input type="submit" value="Submit">
+      <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
     </form>
     </p>
 
     <form onsubmit="send_multiple_value('light_on_input','light_off_input');window.location.reload();return false">
       <input type="number" id="light_on_input" min="0" max="24" placeholder="set light on time" style="width: 200px;">
       <input type="number" id="light_off_input" min="0" max="24" placeholder="set light off time" style="width: 200px;">
-      <input type="submit" value="Submit">
+      <button class="btn btn-light btn-sm p-1 btn-submit" type="submit">Submit</button>
     </form>
     </p>
 
@@ -537,10 +535,11 @@ const char settings_html[] PROGMEM = R"rawliteral(
       <button %CLASS_LIGHT_MAN% style="width: 70px" type="button" id="light_button_toggle"
         %LIGHT_MAN_DIS%>%LIGHT_MAN_TEXT%</button>
     </div>
+    <div class="cp">
+      <p>Copyright (C) - Mushroom Fridge - 2023 - Marvin Kordis </p>
+    </div>
   </div>
-  <div class="foot">
-    <p>Copyright (C) - Mushroom Fridge - 2023 - Marvin Kordis </p>
-  </div>
+
 </body>
 
 
