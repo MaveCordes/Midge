@@ -1,4 +1,4 @@
-const char telsocket_html[] PROGMEM = R"rawliteral(
+const char iSerial_html[] PROGMEM = R"rawliteral(
 
 <!DOCTYPE HTML>
 <html>
@@ -58,7 +58,7 @@ const char telsocket_html[] PROGMEM = R"rawliteral(
 
   .clear-button {
     position: fixed;
-    top: 1rem;
+    top: 5rem;
     right: 1rem;
   }
   </style>
@@ -117,7 +117,7 @@ const char telsocket_html[] PROGMEM = R"rawliteral(
             <a class="nav-link" href="/cam">ESP32CAM</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/telsocket">Telsocket</a>
+            <a class="nav-link" href="/iSerial">iSerial</a>
           </li>
         </ul>
 
@@ -166,13 +166,6 @@ const char telsocket_html[] PROGMEM = R"rawliteral(
     var keys = Object.keys(myObj);
 
     console.log(event.data);
-    
-   // if (myObj.p == true) {
-      //output.textContent += myObj.mssg;
-     // output.textContent += myObj.ts + ": ";
-     // output.textContent += myObj.msg;
-     // output.scrollTop = output.scrollHeight;  
-  //}
 
   if (myObj.p == true) {
     if (!window.tempMessage) {

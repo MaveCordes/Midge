@@ -7,15 +7,15 @@
 #include <sdcard.html>
 #include <about.html>
 #include <cam.html>
-#include <telsocket.html>
+#include <iSerial.html>
 #include <SD.h>
 #include <RTClib.h>
 #include <Preferences.h>
 #include <ArduinoJson.h>
 #include <time.h>
 #include <BasicOTA.hpp>
-#include <WebSerial.h>
-#include <TelnetStream.h>
+//#include <WebSerial.h>
+//#include <TelnetStream.h>
 
 
 

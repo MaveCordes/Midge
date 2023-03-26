@@ -20,46 +20,8 @@ struct tm timeinfo;
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
-//wSerial
-// class iSerialClass : public Stream {
-// public:
-//   size_t write(uint8_t c) {
-//     char buffer[2] = {(char)c, '\0'};
-//     sendJsonMessage(buffer);
-//     return 1;
-//   }
-
-//   int available() {
-//     return 0; // Not needed for this implementation
-//   }
-
-//   int read() {
-//     return -1; // Not needed for this implementation
-//   }
-
-//   int peek() {
-//     return -1; // Not needed for this implementation
-//   }
-
-//   void flush() {
-//     // Not needed for this implementation
-//   }
-
-// private:
-//   void sendJsonMessage(const char* message) {
-//     DynamicJsonDocument doc(1024);
-//     char json_data[1024];
-//     doc["p"] = true;
-//     doc["mssg"] = message;
-//     size_t len = serializeJson(doc, json_data);
-//     ws.textAll(json_data, len);
-//     doc.clear();
-//   }
-// };
-
+//iSerial for OTA Debugging v0.4
 iSerialClass iSerial;
-
-//wSerial
 
 //BasicOTA 
 BasicOTA OTA;
@@ -292,10 +254,10 @@ void setup()
   Serial.begin(115200);
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
 
-  // NVM store credentials, read credentials.cpp documentation
+  // NVM store credentials, Readme in credentials.cpp documentation
   // NVM_store_credentials();
 
-  // NVM read credentials
+  // NVM read credentials from storage
   NVM_read_credentials();
 
   // Start Wifi
@@ -320,9 +282,6 @@ void setup()
   async_server_on();
   Serial.println("AsyncWebserver started");
 
-  // WebSerial
-  WebSerial.begin(&server);
-
   // Start server
   initWebSocket();
   server.begin();
@@ -333,7 +292,6 @@ void setup()
 
   // config OTA
   OTA.begin(); 
-
 
   // Set PINs
   pinMode(waterPIN, OUTPUT);
@@ -436,8 +394,6 @@ void setup()
 
   sensor_control();
 
-  TelnetStream.begin();
-
   Serial.println("Setup finished");
 }
 
@@ -447,19 +403,6 @@ void loop()
   LCDML.loop_control();
   LCDML.loop_menu();
   OTA.handle();  
-
-  //Telnet v0.4
-    // if (TelnetStream.available() > 0) {
-    // String message = "";
-    // while (TelnetStream.available() > 0) {
-    //   char c = TelnetStream.read();
-    //   message += c;
-    //   delay(1);
-    // }
-    //   ws.textAll(message);
-    //   message.clear();  
-    //   }
-  //Telnet v0.4
 
   if (millis() >= loop_timer_short + 300)
   {
@@ -475,9 +418,9 @@ void loop()
     //  SD Control
     SD_control();
 
-    //send_timer_value();
+    send_timer_value();
 
-    //send_sensor_value();
+    send_sensor_value();
 
     loop_timer_short = millis();
   }

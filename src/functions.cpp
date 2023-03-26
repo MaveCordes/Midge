@@ -660,43 +660,13 @@ void sensor_control()
 
   // Serial.println((now.timestamp(DateTime::TIMESTAMP_FULL)));
   Serial.println("SENSOR MEASUREMENT");
-  WebSerial.print("BME1:");
-  WebSerial.println(bme_humidity);
-  WebSerial.print("BME2:");
-  WebSerial.println(bme_humidity2);
-  WebSerial.print("Float10:");
-  WebSerial.println(hum10);
-  WebSerial.print("Hum");
-  WebSerial.println(humidity);
-  // WebSerial.print("AVG10:");
-  // WebSerial.println(avg_hum_10);
-  WebSerial.print("AVG10.mean:");
-  WebSerial.println(avg_hum_10.mean());
-
-  TelnetStream.print("BME1:");
-  TelnetStream.println(bme_humidity);
-  TelnetStream.print("BME2:");
-  TelnetStream.println(bme_humidity2);
-  TelnetStream.print("Float10:");
-  TelnetStream.println(hum10);
-  TelnetStream.print("Hum");
-  TelnetStream.println(humidity);
-  // WebSerial.print("AVG10:");
-  // WebSerial.println(avg_hum_10);
-  TelnetStream.print("AVG10.mean:");
-  TelnetStream.println(avg_hum_10.mean());
-
-  // doc["p"] = true;
-  // doc["mssg"] = "test123";
-  // len = serializeJson(doc, json_data);
-  // ws.textAll(json_data, len);
-  // doc.clear();
-
-  iSerial.println("test123");
+  
+  iSerial.print("BME_1_hum:");
+  iSerial.println(bme_humidity);
+  iSerial.print("BME_2_hum:");
+  iSerial.println(bme_humidity2);
+  iSerial.print("BME_hum10:");
   iSerial.println(hum10);
-
-
-
 
   // Serial.println();
 }

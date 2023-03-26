@@ -29,9 +29,13 @@ const char sdcard_html[] PROGMEM = R"rawliteral(
 
         }
 
-        footer {
-            text-align: center;
-        }
+           footer {
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
 
         .sd_content {
 
@@ -93,7 +97,7 @@ const char sdcard_html[] PROGMEM = R"rawliteral(
                         <a class="nav-link" href="/cam">ESP32CAM</a>
                     </li>
                        <li class="nav-item">
-            <a class="nav-link" href="/telsocket">Telsocket</a>
+            <a class="nav-link" href="/iSerial">iSerial</a>
           </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="javascript:history.back()">Go Back</a>

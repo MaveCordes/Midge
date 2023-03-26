@@ -31,8 +31,12 @@ const char cam_html[] PROGMEM = R"rawliteral(
       font-size: 0.9rem;
     }
 
-    footer {
+       footer {
       text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
 
     #esp32-cam-stream {
@@ -94,7 +98,7 @@ const char cam_html[] PROGMEM = R"rawliteral(
             <a class="nav-link" href="/cam">ESP32CAM</a>
           </li>
              <li class="nav-item">
-            <a class="nav-link" href="/telsocket">Telsocket</a>
+            <a class="nav-link" href="/iSerial">iSerial</a>
           </li>
 
         </ul>

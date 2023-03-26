@@ -28,8 +28,12 @@ const char settings_html[] PROGMEM = R"rawliteral(
 
     }
 
-    footer {
+       footer {
       text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
 
     .table,
@@ -85,6 +89,8 @@ const char settings_html[] PROGMEM = R"rawliteral(
       margin-left: 10px;
       /* 5% from the top, 15% from the bottom and centered */
     }
+
+    
   </style>
 
 </head>
@@ -141,7 +147,7 @@ const char settings_html[] PROGMEM = R"rawliteral(
             <a class="nav-link" href="/cam">ESP32CAM</a>
           </li>
              <li class="nav-item">
-            <a class="nav-link" href="/telsocket">Telsocket</a>
+            <a class="nav-link" href="/iSerial">iSerial</a>
           </li>
 
         </ul>
