@@ -7,6 +7,7 @@ const char settings_html[] PROGMEM = R"rawliteral(
   <meta http-equiv='content-type' content='text/html;charset=UTF-8'>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/simplex/bootstrap.min.css'>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
   <style>
     html {
@@ -28,7 +29,7 @@ const char settings_html[] PROGMEM = R"rawliteral(
 
     }
 
-       footer {
+      footer {
       text-align: center;
       position: fixed;
       bottom: 0;
@@ -89,6 +90,10 @@ const char settings_html[] PROGMEM = R"rawliteral(
       margin-left: 10px;
       /* 5% from the top, 15% from the bottom and centered */
     }
+
+    body {
+  margin-bottom: 50px; /* Adjust this value according to the height of your footer */
+  }
 
     
   </style>
@@ -540,7 +545,7 @@ const char settings_html[] PROGMEM = R"rawliteral(
 </body>
 
 <footer>
-  <p>Copyright (C) - Mushroom Fridge - 2022 - Marvin Kordis </p>
+  <p>Copyright (C) - Mushroom Fridge - 2023 - Marvin Kordis </p>
 </footer>
 
 

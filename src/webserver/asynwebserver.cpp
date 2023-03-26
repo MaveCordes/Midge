@@ -46,7 +46,7 @@ void async_server_on()
             { if(!request->authenticate(http_username.c_str(), http_password.c_str()))
               return request->requestAuthentication();
               request->send_P(200, "text/html", cam_html, processor); });
-  server.on("/iSerial.html", HTTP_GET, [](AsyncWebServerRequest *request)
+  server.on("/iSerial", HTTP_GET, [](AsyncWebServerRequest *request)
             { if(!request->authenticate(http_username.c_str(), http_password.c_str()))
               return request->requestAuthentication();
               request->send_P(200, "text/html", iSerial_html, processor); });

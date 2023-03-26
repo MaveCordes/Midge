@@ -404,7 +404,7 @@ void loop()
   LCDML.loop_menu();
   OTA.handle();  
 
-  if (millis() >= loop_timer_short + 300)
+  if (millis() >= loop_timer_short + 1000)
   {
     // FAN CONTROL
     ventilation_control();
@@ -420,7 +420,7 @@ void loop()
 
     send_timer_value();
 
-    send_sensor_value();
+    //send_sensor_value();
 
     loop_timer_short = millis();
   }
@@ -436,6 +436,8 @@ void loop()
     // co2_control();
 
     set_function();
+
+    send_sensor_value();
 
     loop_timer_long = millis();
   }

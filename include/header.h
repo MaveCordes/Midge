@@ -6,8 +6,8 @@
 #include <settings.html>
 #include <sdcard.html>
 #include <about.html>
-#include <cam.html>
 #include <iSerial.html>
+#include <cam.html>
 #include <SD.h>
 #include <RTClib.h>
 #include <Preferences.h>
@@ -87,11 +87,79 @@ void toggle_light();
 extern bool toggle_ON_var;
 
 //iSerial
+// class iSerialClass : public Stream {
+// public:
+//   size_t write(uint8_t c) {
+//     char buffer[2] = {(char)c, '\0'};
+//     sendJsonMessage(buffer);
+//     return 1;
+//   }
+
+//   int available() {
+//     return 0; // Not needed for this implementation
+//   }
+
+//   int read() {
+//     return -1; // Not needed for this implementation
+//   }
+
+//   int peek() {
+//     return -1; // Not needed for this implementation
+//   }
+
+//   void flush() {
+//     // Not needed for this implementation
+//   }
+
+// // private:
+// //   void sendJsonMessage(const char* message) {
+// //     DynamicJsonDocument doc(1024);
+// //     char json_data[1024];
+// //     doc["p"] = true;
+// //     doc["mssg"] = message;
+// //     size_t len = serializeJson(doc, json_data);
+// //     ws.textAll(json_data, len);
+// //     doc.clear();
+// //   }
+// private:
+//   void sendJsonMessage(const char* message) {
+//     DynamicJsonDocument doc(1024);
+//     char json_data[1024];
+
+//     struct tm timeinfo;
+//     if (!getLocalTime(&timeinfo)) {
+//       Serial.println("Failed to obtain time");
+//       return;
+//     }
+
+//     char timestamp[64];
+//     strftime(timestamp, sizeof(timestamp), "%H:%M:%S", &timeinfo); // Only use HH:MM:SS
+
+//     doc["p"] = true;
+//     doc["msg"] = message;
+//     doc["ts"] = timestamp; // Add the timestamp to the JSON object
+//     size_t len = serializeJson(doc, json_data);
+//     ws.textAll(json_data, len);
+//     doc.clear();
+//   }
+
+// };
 class iSerialClass : public Stream {
 public:
+  iSerialClass() {
+    buffer.reserve(128); // Reserve memory for the buffer
+  }
+
   size_t write(uint8_t c) {
-    char buffer[2] = {(char)c, '\0'};
-    sendJsonMessage(buffer);
+    if (c != '\n') {
+      buffer += (char)c;
+      if (c == '\r') {
+        return 1;
+      }
+    } else {
+      sendJsonMessage(buffer.c_str());
+      buffer = "";
+    }
     return 1;
   }
 
@@ -111,17 +179,9 @@ public:
     // Not needed for this implementation
   }
 
-// private:
-//   void sendJsonMessage(const char* message) {
-//     DynamicJsonDocument doc(1024);
-//     char json_data[1024];
-//     doc["p"] = true;
-//     doc["mssg"] = message;
-//     size_t len = serializeJson(doc, json_data);
-//     ws.textAll(json_data, len);
-//     doc.clear();
-//   }
 private:
+  String buffer; // Add this line to create a buffer
+
   void sendJsonMessage(const char* message) {
     DynamicJsonDocument doc(1024);
     char json_data[1024];
@@ -142,8 +202,8 @@ private:
     ws.textAll(json_data, len);
     doc.clear();
   }
-
 };
+
 
 extern iSerialClass iSerial;
 //iSerial

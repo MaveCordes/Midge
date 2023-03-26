@@ -58,8 +58,8 @@ const char iSerial_html[] PROGMEM = R"rawliteral(
 
   .clear-button {
     position: fixed;
-    top: 5rem;
-    right: 1rem;
+    top: 1rem;
+    right: 5rem;
   }
   </style>
 
@@ -161,24 +161,57 @@ const char iSerial_html[] PROGMEM = R"rawliteral(
     setTimeout(initWebSocket, 2000);
   }
 
-  function onMessage(event) {
-    var myObj = JSON.parse(event.data);
-    var keys = Object.keys(myObj);
+//   function onMessage(event) {
+//     var myObj = JSON.parse(event.data);
+//     var keys = Object.keys(myObj);
 
-    console.log(event.data);
+//     console.log(event.data);
+
+//   if (myObj.p == true) {
+//     if (!window.tempMessage) {
+//       window.tempMessage = "";
+//     }
+//     if (myObj.msg !== "\n") {
+//       window.tempMessage += myObj.msg;
+//     } else {
+//       output.textContent += myObj.ts + ": " + window.tempMessage;
+//       output.textContent += "\n";
+//       output.scrollTop = output.scrollHeight;
+//       window.tempMessage = "";
+//     }
+//   }
+// }
+
+// function onMessage(event) {
+//   var myObj = JSON.parse(event.data);
+//   var keys = Object.keys(myObj);
+
+//   console.log(event.data);
+
+//   if (myObj.p == true) {
+//     if (!window.tempMessage) {
+//       window.tempMessage = "";
+//     }
+//     if (myObj.msg !== "\n") {
+//       window.tempMessage += myObj.msg;
+//     } else {
+//       output.textContent += myObj.ts + ": " + window.tempMessage + "\n";
+//       output.scrollTop = output.scrollHeight;
+//       window.tempMessage = "";
+//     }
+//   }
+// }
+
+function onMessage(event) {
+  var myObj = JSON.parse(event.data);
+  var keys = Object.keys(myObj);
+
+  console.log(event.data);
 
   if (myObj.p == true) {
-    if (!window.tempMessage) {
-      window.tempMessage = "";
-    }
-    if (myObj.msg !== "\n") {
-      window.tempMessage += myObj.msg;
-    } else {
-      output.textContent += myObj.ts + ": " + window.tempMessage;
-      output.textContent += "\n";
-      output.scrollTop = output.scrollHeight;
-      window.tempMessage = "";
-    }
+    var message = myObj.msg.replace("\r", ""); // Remove the carriage return
+    output.textContent += myObj.ts + ": " + message + "\n";
+    output.scrollTop = output.scrollHeight;
   }
 }
 
