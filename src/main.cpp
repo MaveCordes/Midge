@@ -43,10 +43,9 @@ uint8_t _LCDML_DISP_cfg_scrollbar = 0;   // enable a scrollbar
 LiquidCrystal_I2C lcd(0x27, _LCDML_DISP_cols, _LCDML_DISP_rows);
 
 // LCDMenuLib2
-LCDMenuLib2_menu LCDML_0(255, 0, 0, NULL,
-                         NULL);   // root menu element (do not change)
-LCDMenuLib2 LCDML(LCDML_0, _LCDML_DISP_rows, _LCDML_DISP_cols,
-                  lcdml_menu_display, lcdml_menu_clear, lcdml_menu_control);
+// root menu element (do not change)
+LCDMenuLib2_menu LCDML_0(255, 0, 0, NULL, NULL);
+LCDMenuLib2 LCDML(LCDML_0, _LCDML_DISP_rows, _LCDML_DISP_cols, lcdml_menu_display, lcdml_menu_clear, lcdml_menu_control);
 
 // Average Float Declarations
 Average<uint16_t> avg_co2_10(10);
@@ -57,9 +56,8 @@ Average<float> avg_air_10(10);
 uint16_t avg_co2_test;
 
 // MHZ-19b
-#define MHZ19BAUDRATE                                                          \
-    9600;        // Device to MH-Z19 Serial baudrate (should not be changed)
-MHZ19 myMHZ19;   // Constructor for library
+#define MHZ19BAUDRATE 9600;   // Device to MH-Z19 Serial baudrate (should not be changed)
+MHZ19 myMHZ19;                // Constructor for library
 uint8_t RXD2 = 15;
 uint8_t TXD2 = 54;   // 14 on board
 
@@ -73,10 +71,8 @@ Adafruit_BME680 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK);
 Adafruit_BME680 bme_1(BME_CS_1, BME_MOSI, BME_MISO, BME_SCK);
 
 // PINs
-uint8_t waterPIN =
-    27;   // -> interal SD Card PIN 4, change to PIN 2 internal LED, old pin 27
-uint8_t fanforwaterPIN =
-    14;   // -> interal SD Card PIN 4, change to PIN 2 internal LED, old pin 27
+uint8_t waterPIN = 27;         // -> interal SD Card PIN 4, change to PIN 2 internal LED, old pin 27
+uint8_t fanforwaterPIN = 14;   // -> interal SD Card PIN 4, change to PIN 2 internal LED, old pin 27
 
 uint8_t fanPIN = 2;   // conneted to PIN 4 = SD Pin, change!
 uint8_t heatingPIN = 40;
@@ -201,73 +197,57 @@ LCDML_add(13, LCDML_0, 3, "Settings", NULL);
 LCDML_add(14, LCDML_0_3, 1, "Back", mFunc_back);
 LCDML_add(15, LCDML_0_3, 2, "Temperature", NULL);
 LCDML_add(16, LCDML_0_3_2, 1, "Back", mFunc_back);
-LCDML_addAdvanced(17, LCDML_0_3_2, 2, NULL, "", mDyn_set_temp, 2,
-                  _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(17, LCDML_0_3_2, 2, NULL, "", mDyn_set_temp, 2, _LCDML_TYPE_dynParam);
 LCDML_add(18, LCDML_0_3_2, 3, "permanent heating", NULL);   //
 LCDML_add(19, LCDML_0_3_2, 4, "enable heating", NULL);
 LCDML_add(20, LCDML_0_3_2, 5, "disable heating", NULL);
 LCDML_add(21, LCDML_0_3, 3, "Humidity", NULL);
 LCDML_add(22, LCDML_0_3_3, 1, "Back", mFunc_back);
-LCDML_addAdvanced(23, LCDML_0_3_3, 2, NULL, "", mDyn_set_hum, 2,
-                  _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(23, LCDML_0_3_3, 2, NULL, "", mDyn_set_hum, 2, _LCDML_TYPE_dynParam);
 LCDML_add(24, LCDML_0_3_3, 3, "spray", mFunc_spray);
 LCDML_add(25, LCDML_0_3_3_3, 1, "Back", mFunc_back);
-LCDML_addAdvanced(26, LCDML_0_3_3_3, 2, NULL, "spray 10s", mFunc_spray, 1,
-                  _LCDML_TYPE_default);
-LCDML_addAdvanced(27, LCDML_0_3_3_3, 3, NULL, "spray 30s", mFunc_spray, 2,
-                  _LCDML_TYPE_default);
-LCDML_addAdvanced(28, LCDML_0_3_3_3, 4, NULL, "spray 60s", mFunc_spray, 3,
-                  _LCDML_TYPE_default);
-LCDML_addAdvanced(29, LCDML_0_3_3, 4, NULL, "", mDyn_set_water_ON, 4,
-                  _LCDML_TYPE_dynParam);
-LCDML_addAdvanced(30, LCDML_0_3_3, 5, NULL, "", mDyn_set_water_OFF, 5,
-                  _LCDML_TYPE_dynParam);
-LCDML_addAdvanced(31, LCDML_0_3_3, 6, NULL, "enable spraying",
-                  mFunc_status_spray, 1, _LCDML_TYPE_default);
-LCDML_addAdvanced(32, LCDML_0_3_3, 7, NULL, "disable spraying",
-                  mFunc_status_spray, 2, _LCDML_TYPE_default);
+LCDML_addAdvanced(26, LCDML_0_3_3_3, 2, NULL, "spray 10s", mFunc_spray, 1, _LCDML_TYPE_default);
+LCDML_addAdvanced(27, LCDML_0_3_3_3, 3, NULL, "spray 30s", mFunc_spray, 2, _LCDML_TYPE_default);
+LCDML_addAdvanced(28, LCDML_0_3_3_3, 4, NULL, "spray 60s", mFunc_spray, 3, _LCDML_TYPE_default);
+LCDML_addAdvanced(29, LCDML_0_3_3, 4, NULL, "", mDyn_set_water_ON, 4, _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(30, LCDML_0_3_3, 5, NULL, "", mDyn_set_water_OFF, 5, _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(31, LCDML_0_3_3, 6, NULL, "enable spraying", mFunc_status_spray, 1, _LCDML_TYPE_default);
+LCDML_addAdvanced(32, LCDML_0_3_3, 7, NULL, "disable spraying", mFunc_status_spray, 2, _LCDML_TYPE_default);
 LCDML_add(33, LCDML_0_3, 4, "Light", NULL);
 LCDML_add(34, LCDML_0_3_4, 1, "Back", mFunc_back);
-LCDML_addAdvanced(35, LCDML_0_3_4, 2, NULL, "", mDyn_set_light_ON, 2,
-                  _LCDML_TYPE_dynParam);
-LCDML_addAdvanced(36, LCDML_0_3_4, 3, NULL, "", mDyn_set_light_OFF, 3,
-                  _LCDML_TYPE_dynParam);
-LCDML_addAdvanced(37, LCDML_0_3_4, 4, NULL, "Light On", mFunc_led, 1,
-                  _LCDML_TYPE_default);
-LCDML_addAdvanced(38, LCDML_0_3_4, 5, NULL, "Light Off", mFunc_led, 2,
-                  _LCDML_TYPE_default);
+LCDML_addAdvanced(35, LCDML_0_3_4, 2, NULL, "", mDyn_set_light_ON, 2, _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(36, LCDML_0_3_4, 3, NULL, "", mDyn_set_light_OFF, 3, _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(37, LCDML_0_3_4, 4, NULL, "Light On", mFunc_led, 1, _LCDML_TYPE_default);
+LCDML_addAdvanced(38, LCDML_0_3_4, 5, NULL, "Light Off", mFunc_led, 2, _LCDML_TYPE_default);
 LCDML_add(39, LCDML_0_3, 5, "Air", NULL);
 LCDML_add(40, LCDML_0_3_5, 1, "Back", mFunc_back);
-LCDML_addAdvanced(41, LCDML_0_3_5, 2, NULL, "", mDyn_set_fan_ON, 2,
-                  _LCDML_TYPE_dynParam);
-LCDML_addAdvanced(42, LCDML_0_3_5, 3, NULL, "", mDyn_set_fan_OFF, 3,
-                  _LCDML_TYPE_dynParam);
-LCDML_add(43, LCDML_0, 4, "Data", NULL);                //
-LCDML_add(44, LCDML_0_4, 1, "Back", mFunc_back);        //
-LCDML_add(45, LCDML_0_4, 2, "Show mean temp", NULL);    //
-LCDML_add(46, LCDML_0_4, 3, "show mean hum", NULL);     //
-LCDML_add(47, LCDML_0_4, 4, "show mean co2", NULL);     //
-LCDML_add(48, LCDML_0_4, 5, "SD card", NULL);           //
-LCDML_add(49, LCDML_0_4_5, 1, "Back", mFunc_back);      //
-LCDML_add(50, LCDML_0_4_5, 2, "read SD card", NULL);    //
-LCDML_add(51, LCDML_0_4_5, 3, "write SD card", NULL);   //
-LCDML_addAdvanced(52, LCDML_0_4_5, 4, NULL, "", mDyn_set_SD_time, 4,
-                  _LCDML_TYPE_dynParam);                  //
-LCDML_add(53, LCDML_0_4, 6, "show mean wattage", NULL);   //
+LCDML_addAdvanced(41, LCDML_0_3_5, 2, NULL, "", mDyn_set_fan_ON, 2, _LCDML_TYPE_dynParam);
+LCDML_addAdvanced(42, LCDML_0_3_5, 3, NULL, "", mDyn_set_fan_OFF, 3, _LCDML_TYPE_dynParam);
+LCDML_add(43, LCDML_0, 4, "Data", NULL);                                                      //
+LCDML_add(44, LCDML_0_4, 1, "Back", mFunc_back);                                              //
+LCDML_add(45, LCDML_0_4, 2, "Show mean temp", NULL);                                          //
+LCDML_add(46, LCDML_0_4, 3, "show mean hum", NULL);                                           //
+LCDML_add(47, LCDML_0_4, 4, "show mean co2", NULL);                                           //
+LCDML_add(48, LCDML_0_4, 5, "SD card", NULL);                                                 //
+LCDML_add(49, LCDML_0_4_5, 1, "Back", mFunc_back);                                            //
+LCDML_add(50, LCDML_0_4_5, 2, "read SD card", NULL);                                          //
+LCDML_add(51, LCDML_0_4_5, 3, "write SD card", NULL);                                         //
+LCDML_addAdvanced(52, LCDML_0_4_5, 4, NULL, "", mDyn_set_SD_time, 4, _LCDML_TYPE_dynParam);   //
+LCDML_add(53, LCDML_0_4, 6, "show mean wattage", NULL);                                       //
 LCDML_add(54, LCDML_0, 5, "Information", mFunc_information);
 
+//
 // Example for conditions (for example for a screensaver)
 // 1. define a condition as a function of a boolean type -> return false = not
 // displayed, return true = displayed
 // 2. set the function name as callback (remove the braces '()' it gives bad
 // errors) LCDMenuLib_add(id, prev_layer,     new_num, condition,
 // lang_char_array, callback_function, parameter (0-255), menu function type  )
-LCDML_addAdvanced(55, LCDML_0, 6, COND_hide, "screensaver", mFunc_datascreen, 0,
-                  _LCDML_TYPE_default);   // this menu function can be found on
-                                          // "LCDML_display_menuFunction" tab
+LCDML_addAdvanced(55, LCDML_0, 6, COND_hide, "screensaver", mFunc_datascreen, 0, _LCDML_TYPE_default);
+// this menu function can be found on "LCDML_display_menuFunction" tab
 
 // ***TIP*** Try to update _LCDML_DISP_cnt when you add a menu element.
-
+//
 // You can jump to a menu function from anywhere with
 // LCDML.OTHER_jumpToFunc(mFunc_p2); // the parameter is the function name
 
@@ -409,20 +389,15 @@ setup() {
     if (rtc.lostPower()) {
         Serial.println("RTC lost power, let's set the time!");
         getLocalTime(&timeinfo);
-        rtc.adjust(DateTime(timeinfo.tm_year + 1900, timeinfo.tm_mon + 1,
-                            timeinfo.tm_mday, timeinfo.tm_hour, timeinfo.tm_min,
-                            timeinfo.tm_sec));
+        rtc.adjust(DateTime(timeinfo.tm_year + 1900, timeinfo.tm_mon + 1, timeinfo.tm_mday, timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec));
     }
     Serial.println("RTC inizialized");
 
     Serial.println(OTA_var ? "OTA loaded" : "OTA deactivated");
-    Serial.println(fast_calibration ? "MHZ calibration"
-                                    : "MHZ calibration deactivated");
-    Serial.println(enable_heating ? "Heating inizialized"
-                                  : "Heating deactivated");
+    Serial.println(fast_calibration ? "MHZ calibration" : "MHZ calibration deactivated");
+    Serial.println(enable_heating ? "Heating inizialized" : "Heating deactivated");
     Serial.println(enable_light ? "Light inizialized" : "Light deactivated");
-    Serial.println(enable_humidify ? "Humidify inizialized"
-                                   : "Humidify deactivated");
+    Serial.println(enable_humidify ? "Humidify inizialized" : "Humidify deactivated");
     Serial.println(enable_fan ? "Fan inizialized" : "Fan deactivated");
     Serial.println(sensor ? "Sensors inizialized" : "Sensors deactivated");
     Serial.println(mhz ? "MHZ loaded" : "MHZ deactivated");
