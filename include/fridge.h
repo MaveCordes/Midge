@@ -1,8 +1,8 @@
-#include <LCDMenuLib2.h>
-#include <LiquidCrystal_I2C.h>
 #include <Adafruit_BME680.h>
 #include <Average.h>
-#include <MHZ19.h> 
+#include <LCDMenuLib2.h>
+#include <LiquidCrystal_I2C.h>
+#include <MHZ19.h>
 #include <SPIFFS.h>
 #include <Ticker.h>
 
@@ -20,16 +20,16 @@ extern bool switch_screen;
 extern uint8_t _LCDML_DISP_cols;
 extern uint8_t _LCDML_DISP_rows;
 extern uint8_t _LCDML_DSIP_use_header;
-extern uint8_t _LCDML_DISP_cfg_cursor;            
+extern uint8_t _LCDML_DISP_cfg_cursor;
 extern uint8_t _LCDML_DISP_cfg_scrollbar;
 
-//LCD
+// LCD
 extern LCDMenuLib2_menu LCDML_0;
 extern LCDMenuLib2 LCDML;
 extern LiquidCrystal_I2C lcd;
 
-//menu_fix
-extern char* g_LCDML_DISP_lang_lcdml_table[254];
+// menu_fix
+extern char *g_LCDML_DISP_lang_lcdml_table[254];
 extern bool COND_hide();
 
 // Encoder
@@ -48,18 +48,17 @@ extern Adafruit_BME680 bme_1;
 void fast_calibrate_mhz();
 extern int16_t MHZ19BAUDRATE;
 extern int8_t MH_Z19_Temp;
-extern MHZ19 myMHZ19;    // Constructor for library
+extern MHZ19 myMHZ19;   // Constructor for library
 extern uint16_t avg_co2_test;
 extern uint8_t RXD2;
 extern uint8_t TXD2;
 
-//average
-extern Average<uint16_t> avg_co2_10;  
-extern Average<float> avg_temp_10;  
-extern Average<float> avg_hum_10;  
-extern Average<float> avg_bar_10;  
-extern Average<float> avg_air_10;  
-
+// average
+extern Average<uint16_t> avg_co2_10;
+extern Average<float> avg_temp_10;
+extern Average<float> avg_hum_10;
+extern Average<float> avg_bar_10;
+extern Average<float> avg_air_10;
 
 // Sort out later
 extern bool spray;
@@ -88,17 +87,11 @@ void mFunc_back(uint8_t param);
 void mFunc_status_heating(uint8_t param);
 void mFunc_permanent_heating(uint8_t param);
 
-//functions
-void SD_control(DateTime now);
-void SD_write_data();
-void light_control(DateTime now);
-void fan_control(DateTime now);
+// functions
 void sensor_control();
 void co2_control();
-void sensor_measurement(DateTime now);
-void water_control(DateTime now);
 
-//folder
+// folder
 extern char filename[];
 extern char foldername[];
 extern char foldername_sub[];
@@ -112,7 +105,7 @@ void mFunc_para(uint8_t param);
 void mFunc_exampleEventHandling(uint8_t param);
 // sort out later
 
-// global bool variable 
+// global bool variable
 extern bool SD_ON_var;
 extern bool SD_OFF_var;
 
@@ -152,7 +145,7 @@ extern uint8_t fanPIN;
 extern uint8_t heatingPIN;
 extern uint8_t lightPIN;
 
-//global timing variable
+// global timing variable
 extern uint8_t set_hum;
 extern uint8_t SD_time;
 extern uint8_t set_temp;
@@ -209,11 +202,10 @@ extern uint8_t light_store;
 extern unsigned long test_time;
 extern unsigned long test_time_10;
 
-
-// control 
+// control
 void SD_control();
 void water_control();
-void temperature_control ();
+void temperature_control();
 void ventilation_control();
 void light_timer();
 void light_control();
@@ -229,5 +221,3 @@ extern char timer[];
 extern char timer_hour_min[];
 String ntp_hour_min();
 void printLocalTime();
-
-

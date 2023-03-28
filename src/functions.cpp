@@ -631,7 +631,7 @@ printLocalTime() {
 void
 printHeapInfo() {
     uint32_t freeHeap = ESP.getFreeHeap();
-    uint32_t totalHeap = ESP.getHeapSize();
+    // uint32_t totalHeap = ESP.getHeapSize();
     iSerial.println("");
     iSerial.print("Free heap memory");
     iSerial.print(freeHeap);
